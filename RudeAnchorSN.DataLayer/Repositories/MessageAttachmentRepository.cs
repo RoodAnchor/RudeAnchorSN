@@ -8,8 +8,13 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         private readonly RSNContext _dbContext;
 
-        public MessageAttachmentRepository(RSNContext dbContext) =>
-            _dbContext = dbContext;
+        public MessageAttachmentRepository(string connectionString)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
+               .UseSqlServer(connectionString);
+
+            _dbContext = new RSNContext(optionsBuilder.Options);
+        }
 
         public async Task CreateAttachment(MessageAttachmentEntity attachment)
         {

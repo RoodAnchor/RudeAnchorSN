@@ -9,8 +9,14 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         private readonly RSNContext _dbContext;
 
-        public UserRepository(RSNContext dbContext) =>
-            _dbContext = dbContext;
+        public UserRepository(string connectionString)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
+               .UseSqlServer(connectionString);
+
+            _dbContext = new RSNContext(optionsBuilder.Options);
+        }
+            
 
         public async Task CreateUser(UserEntity user)
         {
