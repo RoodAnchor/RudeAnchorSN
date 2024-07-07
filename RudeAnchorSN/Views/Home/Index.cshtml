@@ -1,8 +1,57 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+    ViewData["Title"] = "RudeAnchor Social Network - Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="spoiler-block">
+    Some spoiler text
+</div>
+
+<div class="authorization-form">
+    @using(Html.BeginForm("Index", "SignIn", FormMethod.Post))
+    {
+        <div>
+            <label for="email">
+                <span>Email</span>
+                <input type="text" name="email" />
+            </label>
+        </div>
+        
+        <div>
+            <label for="password">
+                <span>Пароль</span>
+                <input type="password" name="password" />
+            </label>
+        </div>
+
+        <button type="submit">Авторизация</button>
+    }
+</div>
+
+<div class="registration-form">
+    @using (Html.BeginForm("Index", "SignUp", FormMethod.Get))
+    {
+        <div>
+            <label for="firstName">
+                <span>Имя</span>
+                <input type="text" id="firstName" />
+            </label>
+        </div>
+
+        <div>
+            <label for="lastName">
+                <span>Фамилия</span>
+                <input type="password" id="lastName" />
+            </label>
+        </div>
+
+        <div>
+            <label for="birthDate">
+                <span>Дата рождения</span>
+                <input type="date" id="birthDate" />
+            </label>
+        </div>
+
+        <button type="submit">Регистрация</button>
+    }
 </div>

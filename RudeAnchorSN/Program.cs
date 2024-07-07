@@ -1,3 +1,5 @@
+using RudeAnchorSN.LogicLayer.Services;
+
 namespace RudeAnchorSN
 {
     public class Program
@@ -6,7 +8,7 @@ namespace RudeAnchorSN
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
