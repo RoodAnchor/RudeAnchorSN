@@ -2,9 +2,9 @@
 {
     public class MessageEntity
     {
-        public Guid Guid { get; set; }
-        public Guid FromUserGuid { get; set; }
-        public Guid ToUserGuid { get; set; }
+        public int Id { get; set; }
+        public int FromUserId { get; set; }
+        public int ToUserId { get; set; }
         public DateTime Created { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }

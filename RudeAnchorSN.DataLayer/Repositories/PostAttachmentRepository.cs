@@ -26,10 +26,10 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PostAttachmentEntity> GetAttachment(Guid guid) =>
-            await _dbContext.PostAttachments.FirstOrDefaultAsync(x => x.Guid == guid);
+        public async Task<PostAttachmentEntity> GetAttachment(int id) =>
+            await _dbContext.PostAttachments.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<List<PostAttachmentEntity>> GetAttachments(Guid postGuid) =>
-            await _dbContext.PostAttachments.Where(x => x.UserPost.Guid == postGuid).ToListAsync();
+        public async Task<List<PostAttachmentEntity>> GetAttachments(int postId) =>
+            await _dbContext.PostAttachments.Where(x => x.UserPost.Id == postId).ToListAsync();
     }
 }

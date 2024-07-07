@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using RudeAnchorSN.DataLayer.Entities;
 using RudeAnchorSN.DataLayer.Repositories;
 using RudeAnchorSN.LogicLayer.Models;
+using RudeAnchorSN.LogicLayer.Utils;
 
 namespace RudeAnchorSN.LogicLayer.Services
 {
@@ -37,6 +38,9 @@ namespace RudeAnchorSN.LogicLayer.Services
         public async Task RegisterUser(UserModel user)
         {
             var _user = _mapper.Map<UserEntity>(user);
+
+            _user.Registered = DateTime.Now;
+            _user.Password = PasswordUtils.GetPasswordHash(user.Password);
 
             await _repository.CreateUser(_user);
         }

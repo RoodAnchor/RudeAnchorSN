@@ -5,7 +5,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
     public interface IPostAttachmentRepository
     {
         public Task CreateAttachment(PostAttachmentEntity attachment);
-        public Task<PostAttachmentEntity> GetAttachment(Guid guid);
-        public Task<List<PostAttachmentEntity>> GetAttachments(Guid postGuid);
+        public Task<PostAttachmentEntity> GetAttachment(int id);
+        public Task<List<PostAttachmentEntity>> GetAttachments(int postId);
     }
 }

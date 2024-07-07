@@ -5,9 +5,9 @@ namespace RudeAnchorSN.DataLayer.Repositories
     public interface IUserPostRepository
     {
         public Task CreatePost(UserPostEntity userPost);
-        public Task<UserPostEntity> GetPost(Guid guid);
-        public Task<List<UserPostEntity>> GetPosts(Guid userGuid);
+        public Task<UserPostEntity> GetPost(int id);
+        public Task<List<UserPostEntity>> GetPosts(int userId);
         public Task UpdatePost(UserPostEntity userPost);
-        public Task DeletePost(Guid guid);
+        public Task DeletePost(int id);
     }
 }

@@ -2,7 +2,7 @@
 {
     public class PostAttachmentEntity
     {
-        public Guid Guid { get; set; }
+        public int Id { get; set; }
         public UserPostEntity UserPost { get; set; }
         public Uri Uri { get; set; }
         public string Name { get; set; }

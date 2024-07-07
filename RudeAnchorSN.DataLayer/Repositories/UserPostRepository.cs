@@ -27,9 +27,9 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeletePost(Guid guid)
+        public async Task DeletePost(int id)
         {
-            var post = await _dbContext.UserPosts.FirstOrDefaultAsync(x => x.Guid == guid);
+            var post = await _dbContext.UserPosts.FirstOrDefaultAsync(x => x.Id == id);
 
             if (post is null) throw new PostNotFoundException();
 
@@ -38,15 +38,15 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<UserPostEntity> GetPost(Guid guid) =>
-            await _dbContext.UserPosts.FirstOrDefaultAsync(x => x.Guid == guid);
+        public async Task<UserPostEntity> GetPost(int id) =>
+            await _dbContext.UserPosts.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<List<UserPostEntity>> GetPosts(Guid userGuid) =>
-            await _dbContext.UserPosts.Where(x => x.UserGuid == userGuid).ToListAsync();
+        public async Task<List<UserPostEntity>> GetPosts(int userId) =>
+            await _dbContext.UserPosts.Where(x => x.UserId == userId).ToListAsync();
 
         public async Task UpdatePost(UserPostEntity userPost)
         {
-            var post = await GetPost(userPost.Guid);
+            var post = await GetPost(userPost.Id);
 
             if (post is null) throw new PostNotFoundException();
 

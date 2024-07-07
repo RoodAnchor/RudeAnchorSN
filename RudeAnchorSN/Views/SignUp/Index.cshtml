@@ -1,0 +1,41 @@
+﻿@model RudeAnchorSN.LogicLayer.Models.UserModel;
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Регистрация";
+}
+
+@using(Html.BeginForm("Index", "SignUp", FormMethod.Post))
+{
+    <div>
+        <label for="FirstName">
+            <span>Имя</span>
+            <input type="text" name="FirstName" value="@Model.FirstName" />
+        </label>
+    </div>
+
+    <div>
+        <label for="LastName">
+            <span>Фамилия</span>
+            <input type="text" name="LastName" value="@Model.LastName" />
+        </label>
+    </div>
+
+    <div>
+        <label for="Email">
+            <span>Email</span>
+            <input type="text" name="Email" />
+        </label>
+    </div>
+
+    <div>
+        <label for="Password">
+            <span>Пароль</span>
+            <input type="password" name="Password" />
+        </label>
+    </div>
+
+    <input type="hidden" value="@Model.BirthDate" name="BirthDate" />
+
+    <button type="submit">Завершить регистрацию</button>
+}

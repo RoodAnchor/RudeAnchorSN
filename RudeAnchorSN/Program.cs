@@ -1,4 +1,6 @@
 using RudeAnchorSN.LogicLayer.Services;
+using RudeAnchorSN.LogicLayer.Utils;
+using System.Reflection;
 
 namespace RudeAnchorSN
 {
@@ -8,6 +10,7 @@ namespace RudeAnchorSN
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
             builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddControllersWithViews();
 

@@ -27,15 +27,15 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<RequestEntity> GetRequest(Guid guid) =>
-            await _dbContext.Requests.FirstOrDefaultAsync(x => x.Guid == guid);
+        public async Task<RequestEntity> GetRequest(int id) =>
+            await _dbContext.Requests.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<List<RequestEntity>> GetRequests(Guid ToGuid) =>
-            await _dbContext.Requests.Where(x => x.ToUserGuid == ToGuid).ToListAsync();
+        public async Task<List<RequestEntity>> GetRequests(int ToId) =>
+            await _dbContext.Requests.Where(x => x.ToUserId == ToId).ToListAsync();
 
-        public async Task UpdateRequst(Guid guid, Boolean isAccepted)
+        public async Task UpdateRequst(int id, Boolean isAccepted)
         {
-            var request = await GetRequest(guid);
+            var request = await GetRequest(id);
 
             if (request is null) throw new RequestNotFoundException();
 

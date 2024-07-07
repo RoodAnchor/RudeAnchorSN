@@ -5,8 +5,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
     public interface IRequstRepository
     {
         public Task CreateRequest(RequestEntity request);
-        public Task<RequestEntity> GetRequest(Guid guid);
-        public Task<List<RequestEntity>> GetRequests(Guid ToGuid);
-        public Task UpdateRequst(Guid guid, bool isAccepted);
+        public Task<RequestEntity> GetRequest(int id);
+        public Task<List<RequestEntity>> GetRequests(int ToId);
+        public Task UpdateRequst(int id, bool isAccepted);
     }
 }

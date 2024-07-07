@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RudeAnchorSN.LogicLayer\RudeAnchorSN.LogicLayer.csproj" />
   </ItemGroup>
 

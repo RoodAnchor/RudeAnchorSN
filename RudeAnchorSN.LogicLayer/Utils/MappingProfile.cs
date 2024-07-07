@@ -4,12 +4,11 @@ using RudeAnchorSN.LogicLayer.Models;
 
 namespace RudeAnchorSN.LogicLayer.Utils
 {
-    public class UserProfile : Profile
+    public class MappingProfile : Profile
     {
-        public UserProfile()
+        public MappingProfile()
         {
-            CreateMap<UserEntity, UserModel>();
-            CreateMap<UserModel, UserEntity>();
+            CreateMap<UserEntity, UserModel>().ReverseMap();
         }
     }
 }
