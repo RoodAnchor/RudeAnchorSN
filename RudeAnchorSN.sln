@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RudeAnchorSN", "RudeAnchorS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RudeAnchorSN.DataLayer", "RudeAnchorSN.DataLayer\RudeAnchorSN.DataLayer.csproj", "{4EE8C2EC-2288-4241-ABE1-AD031BB5A051}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RudeAnchorSN.LogicLayer", "RudeAnchorSN.LogicLayer\RudeAnchorSN.LogicLayer.csproj", "{9623288F-8D99-4A2D-AA7B-EACF5C6367CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4EE8C2EC-2288-4241-ABE1-AD031BB5A051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EE8C2EC-2288-4241-ABE1-AD031BB5A051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EE8C2EC-2288-4241-ABE1-AD031BB5A051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9623288F-8D99-4A2D-AA7B-EACF5C6367CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9623288F-8D99-4A2D-AA7B-EACF5C6367CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9623288F-8D99-4A2D-AA7B-EACF5C6367CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9623288F-8D99-4A2D-AA7B-EACF5C6367CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
