@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using RudeAnchorSN.LogicLayer.Services;
 using RudeAnchorSN.LogicLayer.Utils;
 using System.Reflection;
@@ -11,8 +12,23 @@ namespace RudeAnchorSN
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
+
             builder.Services.AddSingleton<IUserService, UserService>();
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies")
+                .AddCookie("Cookies", options => 
+                {
+                    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents 
+                    {
+                        OnRedirectToLogin = redirectContext =>
+                        {
+                            redirectContext.HttpContext.Response.StatusCode = 401;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
 
             var app = builder.Build();
 
@@ -29,6 +45,7 @@ namespace RudeAnchorSN
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
