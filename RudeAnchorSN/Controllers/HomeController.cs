@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace RudeAnchorSN.Controllers
 {
@@ -14,6 +13,9 @@ namespace RudeAnchorSN.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "User");
+
             return View();
         }
     }

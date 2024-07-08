@@ -9,12 +9,9 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         private readonly RSNContext _dbContext;
 
-        public UserPostRepository(string connectionString)
+        public UserPostRepository(RSNContext context)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
-               .UseSqlServer(connectionString);
-
-            _dbContext = new RSNContext(optionsBuilder.Options);
+            _dbContext = context;
         }
 
         public async Task CreatePost(UserPostEntity userPost)
@@ -39,10 +36,15 @@ namespace RudeAnchorSN.DataLayer.Repositories
         }
 
         public async Task<UserPostEntity> GetPost(int id) =>
-            await _dbContext.UserPosts.FirstOrDefaultAsync(x => x.Id == id);
+            await _dbContext
+                .UserPosts
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<List<UserPostEntity>> GetPosts(int userId) =>
-            await _dbContext.UserPosts.Where(x => x.UserId == userId).ToListAsync();
+            await _dbContext
+                .UserPosts
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
 
         public async Task UpdatePost(UserPostEntity userPost)
         {

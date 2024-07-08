@@ -1,33 +1,35 @@
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using RudeAnchorSN.LogicLayer.Services;
 using RudeAnchorSN.LogicLayer.Utils;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace RudeAnchorSN
 {
     public class Program
     {
+        private static IConfiguration Configuration { get; } =
+            new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.Development.json")
+            .Build();
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connection = Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IUserPostService, UserPostService>();
 
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies")
-                .AddCookie("Cookies", options => 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => 
                 {
-                    options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents 
-                    {
-                        OnRedirectToLogin = redirectContext =>
-                        {
-                            redirectContext.HttpContext.Response.StatusCode = 401;
-                            return Task.CompletedTask;
-                        }
-                    };
+                    options.LoginPath = new PathString("/");                    
                 });
 
             var app = builder.Build();

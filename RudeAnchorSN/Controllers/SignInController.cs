@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using RudeAnchorSN.LogicLayer.Models;
 using RudeAnchorSN.LogicLayer.Services;
-using RudeAnchorSN.LogicLayer.Utils;
-using System.Security.Authentication;
 using System.Security.Claims;
 
 namespace RudeAnchorSN.Controllers
@@ -24,18 +21,9 @@ namespace RudeAnchorSN.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(UserModel user)
+        public async Task<IActionResult> Index(string email, string password)
         {
-            if (string.IsNullOrEmpty(user.Email) ||
-                string.IsNullOrEmpty(user.Password))
-                throw new ArgumentNullException("Неверный запрос");
-
-            var _user = await _userService.GetUser(user.Email);
-
-            if (_user is null) throw new AuthenticationException($"Пользователь {user.Email} не найден");
-
-            if (_user.Password != PasswordUtils.GetPasswordHash(user.Password))
-                throw new AuthenticationException($"Неверный пароль");
+            var _user = await _userService.AuthenticateUser(email, password);
 
             var claims = new List<Claim>()
             {
@@ -46,7 +34,7 @@ namespace RudeAnchorSN.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "User");
         }
     }
 }

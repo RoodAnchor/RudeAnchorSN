@@ -2,7 +2,7 @@
 
 namespace RudeAnchorSN.DataLayer.Repositories
 {
-    public interface IRequstRepository
+    public interface IRequestRepository
     {
         public Task CreateRequest(RequestEntity request);
         public Task<RequestEntity> GetRequest(int id);

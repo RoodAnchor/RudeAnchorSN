@@ -1,10 +1,8 @@
-﻿namespace RudeAnchorSN.DataLayer.Entities
+﻿namespace RudeAnchorSN.LogicLayer.Models
 {
-    public class UserPostEntity
+    public class UserPostModel
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public UserEntity User { get; set; }
         public DateTime DateCreated { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

@@ -9,14 +9,10 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         private readonly RSNContext _dbContext;
 
-        public UserRepository(string connectionString)
+        public UserRepository(RSNContext context)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
-               .UseSqlServer(connectionString);
-
-            _dbContext = new RSNContext(optionsBuilder.Options);
+            _dbContext = context;
         }
-            
 
         public async Task CreateUser(UserEntity user)
         {
@@ -29,10 +25,16 @@ namespace RudeAnchorSN.DataLayer.Repositories
         }
 
         public async Task<UserEntity> GetUser(int id) =>
-            await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+            await _dbContext
+                .Users
+                .Include(x => x.Posts)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<UserEntity> GetUser(string email) =>
-            await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            await _dbContext
+                .Users
+                .Include(x => x.Posts)
+                .FirstOrDefaultAsync(x => x.Email == email);
 
         public async Task<List<UserEntity>> GetUsers() =>
             await _dbContext.Users.ToListAsync();
@@ -46,6 +48,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
             _user.FirstName = user.FirstName;
             _user.LastName = user.LastName;
             _user.AvatarUrl = user.AvatarUrl;
+            _user.LastOnline = user.LastOnline;
 
             await _dbContext.SaveChangesAsync();
 

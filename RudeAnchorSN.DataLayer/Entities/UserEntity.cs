@@ -11,5 +11,6 @@
         public DateTime Registered { get; set; }
         public DateTime LastOnline { get; set; }
         public DateTime BirthDate { get; set; }
+        public List<UserPostEntity> Posts { get; set; }
     }
 }

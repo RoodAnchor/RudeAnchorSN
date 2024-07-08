@@ -9,12 +9,9 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         private readonly RSNContext _dbContext;
 
-        public MessageRepository(string connectionString)
+        public MessageRepository(RSNContext context)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
-               .UseSqlServer(connectionString);
-
-            _dbContext = new RSNContext(optionsBuilder.Options);
+            _dbContext = context;
         }
 
         public async Task CreateMessage(MessageEntity message)

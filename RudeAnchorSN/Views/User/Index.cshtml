@@ -1,0 +1,54 @@
+﻿@model RudeAnchorSN.LogicLayer.Models.UserModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
+}
+
+<div>
+    <h1>
+        @Model.FirstName @Model.LastName
+    </h1>
+
+    <div class="menu">
+        <div class="avatar">
+            <img />
+        </div>
+        @{
+            if (User.Identity.Name == Model.Email)
+            {
+                <div>
+                    <a>
+                        Редактировать профиль
+                    </a>
+                </div>
+                <div>
+                    <a>
+                        Сообщения
+                    </a>
+                </div>
+            }
+        }
+        <div>
+            <a>
+                Друзья
+            </a>
+        </div>
+    </div>
+
+    <div class="wall">
+        @if (User.Identity.Name == Model.Email)
+        {
+            <div class="add-post-button">
+                <button>Добавить пост</button>
+            </div>
+        }
+        
+        <div class="posts">
+            @foreach(var post in Model.Posts)
+            {
+                <partial name="_Post.cshtml" model="post"/>
+            }
+        </div>
+    </div>
+</div>

@@ -8,6 +8,5 @@
         public DateTime Created { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
-        public List<MessageAttachmentEntity> Attachments { get; set; }
     }
 }

@@ -6,6 +6,8 @@ namespace RudeAnchorSN.LogicLayer.Services
     {
         public Task RegisterUser(UserModel user);
         public Task<UserModel> GetUser(string email);
+        public Task<UserModel> GetUser(int id);
         public Task<List<UserModel>> GetUsers();
+        public Task<UserModel> AuthenticateUser(string email, string password);
     }
 }

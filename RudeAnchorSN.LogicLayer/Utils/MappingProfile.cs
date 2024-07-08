@@ -9,6 +9,7 @@ namespace RudeAnchorSN.LogicLayer.Utils
         public MappingProfile()
         {
             CreateMap<UserEntity, UserModel>().ReverseMap();
+            CreateMap<UserPostEntity, UserPostModel>().ReverseMap();
         }
     }
 }

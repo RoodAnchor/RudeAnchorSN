@@ -5,16 +5,13 @@ using RudeAnchorSN.DataLayer.Exceptions;
 
 namespace RudeAnchorSN.DataLayer.Repositories
 {
-    public class RequestRepository : IRequstRepository
+    public class RequestRepository : IRequestRepository
     {
         private readonly RSNContext _dbContext;
 
-        public RequestRepository(string connectionString)
+        public RequestRepository(RSNContext context)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<RSNContext>()
-               .UseSqlServer(connectionString);
-
-            _dbContext = new RSNContext(optionsBuilder.Options);
+            _dbContext = context;
         }
 
         public async Task CreateRequest(RequestEntity request)
