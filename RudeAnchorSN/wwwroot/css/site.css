@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#profile-picture-placeholder {
+    width: 150px;
+    height: 200px;
+    border: 1px dashed lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

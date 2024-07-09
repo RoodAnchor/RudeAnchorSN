@@ -1,0 +1,52 @@
+﻿@model RudeAnchorSN.LogicLayer.Models.UserModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Редактирование профиля";
+}
+
+@section css {
+    <link rel="stylesheet" href="~/css/editProfile.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/editProfile.js"></script>
+}
+
+<h1>Редактирование профиля</h1>
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    <div>
+        <div>Фото профиля</div>
+        <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)">
+            <input id="profile-pic-input" type="file" accept=".png,.jpeg,.jpg" name="ProfilePic">
+        </div>
+    </div>
+
+    <div>
+        <label for="FirstName">
+            <span>Имя</span>
+            <input type="text" name="FirstName" value="@Model.FirstName" />
+        </label>
+    </div>
+
+    <div>
+        <label for="LastName">
+            <span>Фамилия</span>
+            <input type="text" name="LastName" value="@Model.LastName" />
+        </label>
+    </div>
+
+    <div>
+        <label for="Email">
+            <span>Email</span>
+            <input type="text" readonly name="Email" value="@Model.Email" />
+        </label>
+    </div>
+
+    <input type="hidden" name="ProfilePicUrl" id="profile-pic-hidden" value="@Model.ProfilePicUrl" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <button type="submit">Сохранить изменения</button>
+}

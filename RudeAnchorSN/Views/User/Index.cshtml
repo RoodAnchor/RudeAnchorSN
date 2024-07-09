@@ -5,20 +5,22 @@
     ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
 }
 
+@section css{
+}
+
 <div>
     <h1>
         @Model.FirstName @Model.LastName
     </h1>
 
     <div class="menu">
-        <div class="avatar">
-            <img />
-        </div>
+        <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)"></div>
+
         @{
             if (User.Identity.Name == Model.Email)
             {
                 <div>
-                    <a>
+                    <a asp-action="Edit">
                         Редактировать профиль
                     </a>
                 </div>

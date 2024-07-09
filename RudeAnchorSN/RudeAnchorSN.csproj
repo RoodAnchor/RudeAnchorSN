@@ -10,4 +10,8 @@
     <ProjectReference Include="..\RudeAnchorSN.LogicLayer\RudeAnchorSN.LogicLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\user\" />
+  </ItemGroup>
+
 </Project>

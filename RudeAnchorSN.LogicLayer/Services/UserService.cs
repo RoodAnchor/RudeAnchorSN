@@ -84,5 +84,12 @@ namespace RudeAnchorSN.LogicLayer.Services
 
             return user;
         }
+
+        public async Task UpdateUser(UserModel user)
+        {
+            var _user = _mapper.Map<UserEntity>(user);
+
+            await _repository.UpdateUser(_user);
+        }
     }
 }
