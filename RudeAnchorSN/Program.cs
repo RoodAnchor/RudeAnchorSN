@@ -22,6 +22,7 @@ namespace RudeAnchorSN
             builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
             builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IFriendService, FriendService>();
             builder.Services.AddSingleton<IUserPostService, UserPostService>();
 
             builder.Services.AddControllersWithViews();

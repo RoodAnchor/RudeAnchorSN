@@ -11,6 +11,7 @@
         public DateTime Registered { get; set; }
         public DateTime LastOnline { get; set; }
         public DateTime BirthDate { get; set; }
-        public List<UserPostEntity> Posts { get; set; }
+        public List<UserEntity> Friends { get; set; } = new List<UserEntity>();
+        public List<UserPostEntity> Posts { get; set; } = new List<UserPostEntity>();
     }
 }

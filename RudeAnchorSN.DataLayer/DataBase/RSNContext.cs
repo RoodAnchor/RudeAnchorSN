@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RudeAnchorSN.DataLayer.Entities;
+using System.Formats.Asn1;
 
 namespace RudeAnchorSN.DataLayer.DataBase
 {
@@ -9,6 +10,7 @@ namespace RudeAnchorSN.DataLayer.DataBase
         private static RSNContext _instance;
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserFriendEntity> UserFriends { get; set; }
         public DbSet<UserPostEntity> UserPosts { get; set; }
         public DbSet<MessageEntity> Messages { get; set; }
         public DbSet<RequestEntity> Requests { get; set; }
@@ -17,6 +19,17 @@ namespace RudeAnchorSN.DataLayer.DataBase
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(x => x.Friends)
+                .WithMany()
+                .UsingEntity<UserFriendEntity>(
+                    x => x.HasOne<UserEntity>(y => y.User).WithMany().HasForeignKey(y => y.UserId),
+                    x => x.HasOne<UserEntity>(y => y.Friend).WithMany().HasForeignKey(y => y.FriendId)
+                );
         }
 
         public static RSNContext GetInstance(IConfiguration configuration)
