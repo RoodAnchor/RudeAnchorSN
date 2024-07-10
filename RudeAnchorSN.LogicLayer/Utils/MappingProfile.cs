@@ -8,8 +8,15 @@ namespace RudeAnchorSN.LogicLayer.Utils
     {
         public MappingProfile()
         {
-            CreateMap<UserEntity, UserModel>().ReverseMap();
-            CreateMap<UserPostEntity, UserPostModel>().ReverseMap();
+            CreateMap<UserEntity, UserModel>()
+                .ForMember(x => x.Requests, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<UserPostEntity, UserPostModel>()
+                .ReverseMap();
+
+            CreateMap<RequestEntity, RequestModel>()
+                .ReverseMap();
         }
     }
 }

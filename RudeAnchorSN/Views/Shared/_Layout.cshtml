@@ -9,6 +9,10 @@
 </head>
 <body>
     <header>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Index" asp-controller="SignOut">Выход</a>
+        }
     </header>
     <div class="container">
         <main role="main">

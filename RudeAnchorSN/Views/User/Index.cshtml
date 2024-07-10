@@ -5,6 +5,10 @@
     ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
 }
 
+@{
+    var requestsCount = Model.Requests.Count > 0 ? $"({Model.Requests.Count})" : string.Empty;
+}
+
 @section css{
 }
 
@@ -13,9 +17,19 @@
         @Model.FirstName @Model.LastName
     </h1>
 
-    <div class="menu">
+    <div class="profile-data">
         <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)"></div>
 
+        <div class="date-of-birth">
+            День рождения: @Model.BirthDate.ToShortDateString() (@Model.Age лет)
+        </div>
+
+        <div class="last-online">
+            Последний раз онлайн: @Model.LastOnline
+        </div>
+    </div>
+
+    <div class="menu">
         @{
             if (User.Identity.Name == Model.Email)
             {
@@ -29,13 +43,33 @@
                         Сообщения
                     </a>
                 </div>
+                <div>
+                    <a asp-action="Index" asp-controller="Friends">
+                        Друзья @requestsCount
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    @if(Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
+                    {
+                        <a asp-action="Accept" asp-controller="Friends" asp-route-id="@Model.Id">
+                            Принять
+                        </a>
+                        <a asp-action="Reject" asp-controller="Friends" asp-route-id="@Model.Id">
+                            Отклонить
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Add" asp-controller="Friends" asp-route-id="@Model.Id">
+                            Добавить в друзья
+                        </a>
+                    }
+                </div>
             }
         }
-        <div>
-            <a asp-action="Index" asp-controller="Friends">
-                Друзья
-            </a>
-        </div>
     </div>
 
     <div class="wall">

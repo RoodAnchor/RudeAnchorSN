@@ -1,6 +1,54 @@
-﻿@{
+﻿@model RudeAnchorSN.LogicLayer.Models.FriendsViewModel
+
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Друзья";
 }
 
 <h1>Друзья</h1>
+
+<a asp-action="Add" asp-controller="Friends">Найти друзей</a>
+
+@if(Model.PendingRequests.Count > 0)
+{
+    <h2>Заявки в друзья</h2>
+    <div class="friends-container">
+        @foreach (var user in Model.PendingRequests)
+        {
+            <div class="friend">
+                <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                    <div class="friend-name">
+                        @user.FirstName @user.LastName
+                    </div>
+                </a>
+                <a asp-action="Accept" asp-controller="Friends" asp-route-id="@user.Id">
+                    Принять
+                </a>
+                <a asp-action="Reject" asp-controller="Friends" asp-route-id="@user.Id">
+                    Отклонить
+                </a>
+            </div>
+        }
+    </div>
+}
+
+@if (Model.Friends.Count > 0)
+{
+    <h2>У вас в друзьях</h2>
+
+    <div class="friends-container">
+        @foreach (var user in Model.Friends)
+        {
+            <div class="friend">
+                <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                    <div class="friend-name">
+                        @user.FirstName @user.LastName
+                    </div>
+                </a>
+                <a asp-action="Remove" asp-controller="Friends" asp-route-id="@user.Id">
+                    Убрать из друзей
+                </a>
+            </div>
+        }
+    </div>
+}

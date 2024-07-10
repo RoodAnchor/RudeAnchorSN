@@ -16,7 +16,7 @@ namespace RudeAnchorSN.LogicLayer.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
-        public UserService(IMapper mapper, IConfiguration config)
+        public UserService(IMapper mapper, IConfiguration config )
         {
             _repository = new UserRepository(RSNContext.GetInstance(config));
             _mapper = mapper;
@@ -47,10 +47,13 @@ namespace RudeAnchorSN.LogicLayer.Services
             return user;
         }
 
-        public async Task<List<UserModel>> GetUsers()
+        public async Task<List<UserModel>> GetUsers(int currentUserId)
         {
             var _users = await _repository.GetUsers();
-            var users = _mapper.Map<List<UserModel>>(_users);
+            var users = _mapper
+                .Map<List<UserModel>>(_users)
+                .Where(x => x.Id != currentUserId)
+                .ToList();
 
             return users;
         }

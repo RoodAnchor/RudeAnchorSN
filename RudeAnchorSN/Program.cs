@@ -23,6 +23,7 @@ namespace RudeAnchorSN
 
             builder.Services.AddSingleton<IUserService, UserService>();
             builder.Services.AddSingleton<IFriendService, FriendService>();
+            builder.Services.AddSingleton<IRequestService, RequestService>();
             builder.Services.AddSingleton<IUserPostService, UserPostService>();
 
             builder.Services.AddControllersWithViews();

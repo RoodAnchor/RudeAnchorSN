@@ -1,0 +1,17 @@
+﻿@model List<RudeAnchorSN.LogicLayer.Models.UserModel>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Найди друзей";
+}
+
+<div class="users-container">
+    @foreach(var user in Model)
+    {
+        <div class="user">
+            <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                @user.FirstName @user.LastName
+            </a>
+        </div>
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using RudeAnchorSN.DataLayer.DataBase;
+﻿using Microsoft.EntityFrameworkCore;
+using RudeAnchorSN.DataLayer.DataBase;
 using RudeAnchorSN.DataLayer.Entities;
 
 namespace RudeAnchorSN.DataLayer.Repositories
@@ -12,26 +13,36 @@ namespace RudeAnchorSN.DataLayer.Repositories
             _dbContext = context;
         }
 
-        public async Task AddFriend(Int32 userId, Int32 friendId)
+        public async Task AddFriend(int userId, int friendId)
         {
-            var user = _dbContext.Users.FirstOrDefault(x => x.Id == userId);
-            var friend = _dbContext.Users.FirstOrDefault(x => x.Id == friendId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
 
             user.Friends.Add(friend);
+            friend.Friends.Add(user);
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<UserEntity>> GetFriends(Int32 userId)
+        public async Task<List<UserEntity>> GetFriends(int userId)
         {
-            var friends = _dbContext.UserFriends.Where(x => x.UserId == userId).Select(x => x.Friend).ToList();
+            var all = await _dbContext.UserFriends.ToListAsync();
+            var userFriend = all.Where(x => x.UserId == userId)
+                .Select(x => x.Friend)
+                .ToList();
 
-            return friends;
+            return userFriend;
         }
 
-        public Task RemoveFriend(Int32 userId, Int32 friendId)
+        public async Task RemoveFriend(int userId, int friendId)
         {
-            throw new NotImplementedException();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
+
+            user.Friends.Remove(friend);
+            friend.Friends.Remove(user);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

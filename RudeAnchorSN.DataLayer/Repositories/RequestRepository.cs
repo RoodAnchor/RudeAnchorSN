@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RudeAnchorSN.DataLayer.DataBase;
 using RudeAnchorSN.DataLayer.Entities;
-using RudeAnchorSN.DataLayer.Exceptions;
+using RudeAnchorSN.DataLayer.Enums;
 
 namespace RudeAnchorSN.DataLayer.Repositories
 {
@@ -14,29 +14,41 @@ namespace RudeAnchorSN.DataLayer.Repositories
             _dbContext = context;
         }
 
-        public async Task CreateRequest(RequestEntity request)
+        public async Task CreateRequest(int userId, int friendId)
         {
-            var entry = _dbContext.Entry(request);
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
+            var newRequest = new RequestEntity() 
+            {
+                UserId = userId,
+                FriendId = friendId
+            };
 
-            if (entry.State == EntityState.Detached)
-                await _dbContext.Requests.AddAsync(request);
+            friend.Requests.Add(newRequest);
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<RequestEntity> GetRequest(int id) =>
-            await _dbContext.Requests.FirstOrDefaultAsync(x => x.Id == id);
-
-        public async Task<List<RequestEntity>> GetRequests(int ToId) =>
-            await _dbContext.Requests.Where(x => x.ToUserId == ToId).ToListAsync();
-
-        public async Task UpdateRequst(int id, Boolean isAccepted)
+        public async Task<List<UserEntity>> GetPending(int userId)
         {
-            var request = await GetRequest(id);
+            var all = await _dbContext.Requests.ToListAsync();
+            var pending = all.Where(x => 
+                    x.UserId == userId && x.RequestState == RequestStateEnum.Pending)
+                .Select(x => x.Friend).ToList();
 
-            if (request is null) throw new RequestNotFoundException();
+            return pending;
+        }
 
-            request.IsAccepted = isAccepted;
+        public async Task<RequestEntity?> GetRequest(int userId, int friendId)
+        {
+            return await _dbContext.Requests
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.FriendId == friendId && x.RequestState == RequestStateEnum.Pending);
+        }
+
+        public async Task Update(int reqestId, RequestStateEnum requestState)
+        {
+            var request = await _dbContext.Requests.FirstOrDefaultAsync(x => x.Id == reqestId);
+
+            request.RequestState = requestState;
 
             await _dbContext.SaveChangesAsync();
         }
