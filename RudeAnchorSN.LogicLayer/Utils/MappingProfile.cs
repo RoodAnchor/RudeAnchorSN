@@ -17,6 +17,12 @@ namespace RudeAnchorSN.LogicLayer.Utils
 
             CreateMap<RequestEntity, RequestModel>()
                 .ReverseMap();
+
+            CreateMap<ChatEntity, ChatModel>()
+                .ReverseMap();
+
+            CreateMap<MessageEntity, MessageModel>()
+                .ReverseMap();
         }
     }
 }

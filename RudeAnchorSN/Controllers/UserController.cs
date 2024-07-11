@@ -9,18 +9,21 @@ namespace RudeAnchorSN.Controllers
     [Route("[controller]")]
     public class UserController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
         private readonly IRequestService _requestService;
+        private readonly IChatService _chatService;
 
         public UserController(
-            ILogger<HomeController> logger,
+            ILogger<UserController> logger,
             IUserService userService,
-            IRequestService requestService)
+            IRequestService requestService,
+            IChatService chatService)
         {
             _logger = logger;
             _userService = userService;
             _requestService = requestService;
+            _chatService = chatService;
         }
 
         [HttpGet]
@@ -28,6 +31,7 @@ namespace RudeAnchorSN.Controllers
         {
             var user = await _userService.GetUser(User.Identity.Name);
             user.Requests = await _requestService.GetPending(user.Id);
+            user.Chats = await _chatService.GetChats(user.Id);
 
             return View(user);
         }
@@ -40,6 +44,7 @@ namespace RudeAnchorSN.Controllers
             var user = await _userService.GetUser(id);
 
             user.Requests = await _requestService.GetPending(currentUser.Id);
+            user.Chats = await _chatService.GetChats(user.Id);
 
             return View(user);
         }

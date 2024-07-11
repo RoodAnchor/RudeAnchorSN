@@ -14,7 +14,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
             _dbContext = context;
         }
 
-        public async Task CreateMessage(MessageEntity message)
+        public async Task<int> CreateMessage(MessageEntity message)
         {
             var entry = _dbContext.Entry(message);
 
@@ -22,6 +22,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
                 await _dbContext.Messages.AddAsync(message);
 
             await _dbContext.SaveChangesAsync();
+
+            return message.Id;
         }
 
 

@@ -7,9 +7,9 @@
 
 @{
     var requestsCount = Model.Requests.Count > 0 ? $"({Model.Requests.Count})" : string.Empty;
-}
-
-@section css{
+    var ownPage = User.Identity.Name == Model.Email;
+    var isInFriends = Model.Friends.Any(x => x.Email == User.Identity.Name);
+    var newMessagesCount = Model.Chats.Where(x => x.HasNew && x.Messages.LastOrDefault().Author.Email != User.Identity.Name).Count();
 }
 
 <div>
@@ -30,45 +30,52 @@
     </div>
 
     <div class="menu">
-        @{
-            if (User.Identity.Name == Model.Email)
-            {
-                <div>
-                    <a asp-action="Edit">
-                        Редактировать профиль
+        @if (ownPage)
+        {
+            <div>
+                <a asp-action="Edit">
+                    Редактировать профиль
+                </a>
+            </div>
+            <div>
+                <a asp-action="Index" asp-controller="Messages">
+                    Сообщения @(newMessagesCount > 0 ? $"({newMessagesCount})" : string.Empty)
+                </a>
+            </div>
+            <div>
+                <a asp-action="Index" asp-controller="Friends">
+                    Друзья @requestsCount
+                </a>
+            </div>
+        }
+        else
+        {
+            <div>
+                @if (Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
+                {
+                    <a asp-action="Accept" asp-controller="Friends" asp-route-id="@Model.Id">
+                        Принять
                     </a>
-                </div>
-                <div>
-                    <a>
-                        Сообщения
+                    <a asp-action="Reject" asp-controller="Friends" asp-route-id="@Model.Id">
+                        Отклонить
                     </a>
-                </div>
-                <div>
-                    <a asp-action="Index" asp-controller="Friends">
-                        Друзья @requestsCount
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div>
-                    @if(Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
-                    {
-                        <a asp-action="Accept" asp-controller="Friends" asp-route-id="@Model.Id">
-                            Принять
-                        </a>
-                        <a asp-action="Reject" asp-controller="Friends" asp-route-id="@Model.Id">
-                            Отклонить
-                        </a>
-                    }
-                    else
+                }
+                else
+                {
+                    if (!isInFriends)
                     {
                         <a asp-action="Add" asp-controller="Friends" asp-route-id="@Model.Id">
                             Добавить в друзья
                         </a>
                     }
-                </div>
-            }
+                    else
+                    {
+                        <a asp-action="Index" asp-controller="Chat" asp-route-id="-1" asp-route-userId="@Model.Id">
+                            Написать сообщение
+                        </a>
+                    }
+                }
+            </div>
         }
     </div>
 

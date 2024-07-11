@@ -14,5 +14,6 @@
         public List<RequestEntity> Requests { get; set; } = new List<RequestEntity>();
         public List<UserEntity> Friends { get; set; } = new List<UserEntity>();
         public List<UserPostEntity> Posts { get; set; } = new List<UserPostEntity>();
+        public List<ChatEntity> Chats { get; set; } = new List<ChatEntity> { };
     }
 }

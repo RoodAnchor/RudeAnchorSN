@@ -4,7 +4,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
 {
     public interface IMessageRepository
     {
-        public Task CreateMessage(MessageEntity message);
+        public Task<int> CreateMessage(MessageEntity message);
         public Task<MessageEntity> GetMessage(int id);
         public Task<List<MessageEntity>> GetMessages();
         public Task DeleteMessage(int id);

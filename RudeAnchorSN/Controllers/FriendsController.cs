@@ -9,13 +9,13 @@ namespace RudeAnchorSN.Controllers
     [Route("[controller]")]
     public class FriendsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<FriendsController> _logger;
         private readonly IUserService _userService;
         private readonly IFriendService _friendService;
         private readonly IRequestService _requestService;
 
         public FriendsController(
-            ILogger<HomeController> logger,
+            ILogger<FriendsController> logger,
             IUserService userService,
             IFriendService friendService,
             IRequestService requestService)
@@ -33,7 +33,7 @@ namespace RudeAnchorSN.Controllers
             var friends = new FriendsViewModel();
 
             friends.PendingRequests = await _requestService.GetPending(user.Id);
-            friends.Friends = await _friendService.GetFriends(user.Id);
+            friends.Friends = user.Friends;
 
             return View(friends);
         }

@@ -28,12 +28,14 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext
                 .Users
                 .Include(x => x.Posts)
+                .Include(x => x.Friends)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<UserEntity> GetUser(string email) =>
             await _dbContext
                 .Users
                 .Include(x => x.Posts)
+                .Include(x => x.Friends)
                 .FirstOrDefaultAsync(x => x.Email == email);
 
         public async Task<List<UserEntity>> GetUsers() =>

@@ -11,8 +11,9 @@ namespace RudeAnchorSN.DataLayer.DataBase
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserFriendEntity> UserFriends { get; set; }        
         public DbSet<UserPostEntity> UserPosts { get; set; }
-        public DbSet<MessageEntity> Messages { get; set; }
         public DbSet<RequestEntity> Requests { get; set; }
+        public DbSet<ChatEntity> Chats { get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
 
         private RSNContext(DbContextOptions<RSNContext> options) : base(options) 
         {

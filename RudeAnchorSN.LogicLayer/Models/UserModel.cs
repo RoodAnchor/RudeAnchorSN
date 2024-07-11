@@ -20,5 +20,7 @@
         }
         public List<UserModel> Requests { get; set; }
         public List<UserPostModel> Posts { get; set; }
+        public List<UserModel> Friends { get; set; }
+        public List<ChatModel> Chats { get; set; }
     }
 }

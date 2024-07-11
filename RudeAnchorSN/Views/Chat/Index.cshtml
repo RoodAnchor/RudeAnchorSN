@@ -1,0 +1,44 @@
+﻿@model RudeAnchorSN.LogicLayer.Models.ChatModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Чат";
+}
+
+@foreach(var message in Model.Messages.OrderBy(x => x.Created))
+{
+    <div class="message">
+        <div class="message-author">
+            @if (message.Author.Email == User.Identity.Name)
+            {
+                <span>Вы</span>
+            }
+            else
+            {
+                <span>@message.Author.FirstName @message.Author.LastName</span>
+            }
+        </div>
+        <div class="message-content">
+            @message.Content
+        </div>
+        <div class="message-date">
+            @message.Created
+        </div>
+        <hr />
+    </div>
+}
+
+@using(Html.BeginForm("SendMessage", "Chat", FormMethod.Post))
+{
+    <div>
+        <div>
+            <span>Сообщение</span>
+            <input type="text" name="content" />
+        </div>
+        
+        <input type="hidden" name="chatId" value="@Model.Id">
+
+        <button type="submit">Отправить</button>
+
+    </div>
+}

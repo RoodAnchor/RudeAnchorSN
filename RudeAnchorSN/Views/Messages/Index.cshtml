@@ -1,0 +1,37 @@
+﻿@model List<RudeAnchorSN.LogicLayer.Models.ChatModel>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Сообщения";
+}
+
+<h1>Сообщения</h1>
+
+<div class="chats-container">
+    @foreach (var chat in Model)
+    {
+        <div class="chat">
+
+            @{
+                var lastMessage = chat.Messages.OrderBy(x => x.Created).LastOrDefault();
+            }
+
+            <a asp-action="Index" asp-controller="Chat" asp-route-id="@chat.Id">
+                <div class="last-author">
+                    @if (lastMessage.Author.Email == User.Identity.Name)
+                    {
+                        <span>Вы</span>
+                    }
+                    else
+                    {
+                        <span>@lastMessage.Author.FirstName @lastMessage.Author.LastName</span>
+                    }
+                </div>
+
+                <div class="last-message">
+                    @lastMessage.Content;
+                </div>
+            </a>
+        </div>
+    }
+</div>

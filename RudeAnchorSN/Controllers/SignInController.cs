@@ -9,11 +9,11 @@ namespace RudeAnchorSN.Controllers
     [Route("[controller]")]
     public class SignInController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<SignInController> _logger;
         private readonly IUserService _userService;
 
         public SignInController(
-            ILogger<HomeController> logger,
+            ILogger<SignInController> logger,
             IUserService userService)
         {
             _logger = logger;
