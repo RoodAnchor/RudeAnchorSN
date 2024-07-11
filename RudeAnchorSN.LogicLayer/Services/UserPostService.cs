@@ -10,13 +10,15 @@ namespace RudeAnchorSN.LogicLayer.Services
 {
     public class UserPostService : IUserPostService
     {
-        private readonly IUserPostRepository _repository;
+        private readonly IUserPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
         public UserPostService(IMapper mapper, IConfiguration config)
         {
-            _repository = new UserPostRepository(RSNContext.GetInstance(config));
+            _postRepository = new UserPostRepository(RSNContext.GetInstance(config));
+            _userRepository = new UserRepository(RSNContext.GetInstance(config));
             _mapper = mapper;
             _config = config;
         }
@@ -25,12 +27,12 @@ namespace RudeAnchorSN.LogicLayer.Services
         {
             var _post = _mapper.Map<UserPostEntity>(post);
 
-            await _repository.CreatePost(_post);
+            await _postRepository.CreatePost(_post);
         }
 
         public async Task<UserPostModel> GetPost(int id) 
         {
-            var _post = await _repository.GetPost(id);
+            var _post = await _postRepository.GetPost(id);
 
             if (_post is null)
                 throw new PostNotFoundException();
@@ -40,14 +42,21 @@ namespace RudeAnchorSN.LogicLayer.Services
 
         public async Task<List<UserPostModel>> GetPosts(int userId)
         {
-            var _posts = await _repository.GetPosts(userId);
+            var _posts = await _postRepository.GetPosts(userId);
 
             return _mapper.Map<List<UserPostModel>>(_posts);
         }
 
         public async Task DeletePost(int id)
         {
-            await _repository.DeletePost(id);
+            await _postRepository.DeletePost(id);
+        }
+
+        public async Task UpdatePost(UserPostModel userPost)
+        {
+            var _post = _mapper.Map<UserPostEntity>(userPost);
+
+            await _postRepository.UpdatePost(_post);
         }
     }
 }

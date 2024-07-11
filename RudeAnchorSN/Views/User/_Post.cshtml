@@ -1,6 +1,17 @@
-﻿@model RudeAnchorSN.LogicLayer.Models.UserPostModel
+﻿@model RudeAnchorSN.LogicLayer.Models.UserPostViewModel
+
+@{
+    var ownPage = User.Identity.Name == Model.Author.Email;
+}
 
 <div class="post">
-    <div class="post-title">@Model.Title</div>
-    <div class="post-content">@Model.Content</div>
+    <div class="post-title">@Model.Post.Title</div>
+    <div class="post-content">@Model.Post.Content</div>
+    <div class="post-date">@Model.Post.DateCreated</div>
+    @if (ownPage)
+    {
+        <div>
+            <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.Post.Id">Править</a>
+        </div>
+    }
 </div>

@@ -16,10 +16,14 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task CreatePost(UserPostEntity userPost)
         {
-            var entry = _dbContext.Entry(userPost);
+            var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == userPost.UserId);
 
-            if (entry.State == EntityState.Detached)
-                await _dbContext.UserPosts.AddAsync(userPost);
+            user.Posts.Add(userPost);
+
+            //var entry = _dbContext.Entry(userPost);
+
+            //if (entry.State == EntityState.Detached)
+            //    await _dbContext.UserPosts.AddAsync(userPost);
 
             await _dbContext.SaveChangesAsync();
         }
@@ -52,6 +56,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
             if (post is null) throw new PostNotFoundException();
 
+            post.Title = userPost.Title;
             post.Content = userPost.Content;
 
             await _dbContext.SaveChangesAsync();

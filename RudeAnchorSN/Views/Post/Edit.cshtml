@@ -1,0 +1,24 @@
+﻿@model RudeAnchorSN.LogicLayer.Models.UserPostModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Правка записи";
+}
+
+<h1>Править запись</h1>
+
+<form action="/Post/Edit" method="post">
+    <div>
+        <span>Заголовок</span>
+        <input type="text" name="title" value="@Model.Title">
+    </div>
+
+    <div>
+        <span>Содержание</span>
+        <textarea name="content" wrap="hard">@Model.Content</textarea>
+    </div>
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <button type="submit">Сохранить</button>
+</form>

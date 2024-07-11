@@ -80,17 +80,17 @@
     </div>
 
     <div class="wall">
-        @if (User.Identity.Name == Model.Email)
+        @if (ownPage)
         {
             <div class="add-post-button">
-                <button>Добавить пост</button>
+                <a asp-action="Add" asp-controller="Post">Добавить пост</a>
             </div>
         }
         
         <div class="posts">
             @foreach(var post in Model.Posts)
             {
-                <partial name="_Post.cshtml" model="post"/>
+                <partial name="_Post.cshtml" model="new RudeAnchorSN.LogicLayer.Models.UserPostViewModel(Model, post)"/>
             }
         </div>
     </div>
