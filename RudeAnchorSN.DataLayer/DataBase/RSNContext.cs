@@ -6,7 +6,7 @@ namespace RudeAnchorSN.DataLayer.DataBase
 {
     public class RSNContext : DbContext
     {
-        private static RSNContext _instance;
+        private static RSNContext? _instance;
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserFriendEntity> UserFriends { get; set; }        

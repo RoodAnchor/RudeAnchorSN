@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using RudeAnchorSN.LogicLayer.Models;
 using RudeAnchorSN.LogicLayer.Services;
 using System;
@@ -33,9 +32,15 @@ namespace RudeAnchorSN.Controllers
             
             if (chat is null)
             {
-                var currentUser = await _userService.GetUser(User.Identity.Name);
+                var currentUser = await _userService.GetUser(User?.Identity?.Name);
                 var user = await _userService.GetUser(userId);
-                var users = new List<UserModel>() { currentUser, user };
+                var users = new List<UserModel>();
+
+                if (currentUser != null)
+                    users.Add(currentUser);
+
+                if (user != null)
+                    users.Add(user);
 
                 chat = await _chatService.StartChat(users);
 
@@ -44,7 +49,7 @@ namespace RudeAnchorSN.Controllers
 
             var lastMessage = chat.Messages.LastOrDefault();
 
-            if (lastMessage != null && lastMessage.Author.Email != User.Identity.Name)
+            if (lastMessage != null && lastMessage?.Author?.Email != User?.Identity?.Name)
                 await _chatService.MarkAsRead(chat.Id);
 
             return View(chat);
@@ -56,7 +61,9 @@ namespace RudeAnchorSN.Controllers
             int chatId,
             string content)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
+            var user = await _userService.GetUser(User?.Identity?.Name);
+
+            if (user is null) return RedirectToAction("Index", new { id = chatId });
 
             var message = new MessageModel()
             {

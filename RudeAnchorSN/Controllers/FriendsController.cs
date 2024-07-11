@@ -29,11 +29,14 @@ namespace RudeAnchorSN.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userService.GetUser(User.Identity.Name);
+            var user = await _userService.GetUser(User?.Identity?.Name);
             var friends = new FriendsViewModel();
 
-            friends.PendingRequests = await _requestService.GetPending(user.Id);
-            friends.Friends = user.Friends;
+            if (user != null)
+            {
+                friends.PendingRequests = await _requestService.GetPending(user.Id);
+                friends.Friends = user.Friends;
+            }
 
             return View(friends);
         }
@@ -42,8 +45,11 @@ namespace RudeAnchorSN.Controllers
         [Route("Add")]
         public async Task<IActionResult> Add()
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            var users = await _userService.GetUsers(user.Id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
+            var users = new List<UserModel>();
+                
+            if (user != null)
+                await _userService.GetUsers(user.Id);
 
             return View(users);
         }
@@ -52,11 +58,15 @@ namespace RudeAnchorSN.Controllers
         [Route("Add/{id}")]
         public async Task<IActionResult> Add(int id)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            var request = await _requestService.GetRequest(id, user.Id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
-            if (request == null)
-                await _requestService.SendRequest(id, user.Id);
+            if (user != null)
+            {
+                var request = await _requestService.GetRequest(id, user.Id);
+
+                if (request == null)
+                    await _requestService.SendRequest(id, user.Id);
+            }
 
             return RedirectToAction("Index");
         }
@@ -65,9 +75,10 @@ namespace RudeAnchorSN.Controllers
         [Route("Remove/{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
-            await _friendService.RemoveFriend(user.Id, id);
+            if (user != null)
+                await _friendService.RemoveFriend(user.Id, id);
 
             return RedirectToAction("Index");
         }
@@ -76,10 +87,14 @@ namespace RudeAnchorSN.Controllers
         [Route("Reject/{id}")]
         public async Task<IActionResult> Reject(int id)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            var request = await _requestService.GetRequest(user.Id, id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
-            await _requestService.Reject(request.Id);
+            if ( user != null)
+            {
+                var request = await _requestService.GetRequest(user.Id, id);
+
+                await _requestService.Reject(request.Id);
+            }
 
             return RedirectToAction("Index");
         }
@@ -88,11 +103,15 @@ namespace RudeAnchorSN.Controllers
         [Route("Accept/{id}")]
         public async Task<IActionResult> Accept(int id)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            var request = await _requestService.GetRequest(user.Id, id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
-            await _requestService.Accept(request.Id);
-            await _friendService.AddFriend(user.Id, id);
+            if (user != null)
+            {
+                var request = await _requestService.GetRequest(user.Id, id);
+
+                await _requestService.Accept(request.Id);
+                await _friendService.AddFriend(user.Id, id);
+            }
 
             return RedirectToAction("Index");
         }

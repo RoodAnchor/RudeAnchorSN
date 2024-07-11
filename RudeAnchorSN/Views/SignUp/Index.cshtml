@@ -10,32 +10,32 @@
     <div>
         <label for="FirstName">
             <span>Имя</span>
-            <input type="text" name="FirstName" value="@Model.FirstName" />
+            <input type="text" name="FirstName" value="@Model.FirstName" required />
         </label>
     </div>
 
     <div>
         <label for="LastName">
             <span>Фамилия</span>
-            <input type="text" name="LastName" value="@Model.LastName" />
+            <input type="text" name="LastName" value="@Model.LastName" required />
         </label>
     </div>
 
     <div>
         <label for="Email">
             <span>Email</span>
-            <input type="text" name="Email" />
+            <input type="text" name="Email" required />
         </label>
     </div>
 
     <div>
         <label for="Password">
             <span>Пароль</span>
-            <input type="password" name="Password" />
+            <input type="password" name="Password" required />
         </label>
     </div>
 
-    <input type="hidden" value="@Model.BirthDate" name="BirthDate" />
+    <input type="hidden" value="@Model.BirthDate" name="BirthDate" required />
 
     <button type="submit">Завершить регистрацию</button>
 }

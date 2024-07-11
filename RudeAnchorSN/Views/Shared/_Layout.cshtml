@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var userIdentity = User?.Identity;
+}
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
@@ -9,7 +13,7 @@
 </head>
 <body>
     <header>
-        @if (User.Identity.IsAuthenticated)
+        @if (userIdentity != null && userIdentity.IsAuthenticated)
         {
             <a asp-action="Index" asp-controller="SignOut">Выход</a>
         }

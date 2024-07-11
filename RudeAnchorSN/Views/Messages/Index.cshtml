@@ -18,18 +18,18 @@
 
             <a asp-action="Index" asp-controller="Chat" asp-route-id="@chat.Id">
                 <div class="last-author">
-                    @if (lastMessage.Author.Email == User.Identity.Name)
+                    @if (lastMessage?.Author?.Email == User?.Identity?.Name)
                     {
                         <span>Вы</span>
                     }
                     else
                     {
-                        <span>@lastMessage.Author.FirstName @lastMessage.Author.LastName</span>
+                        <span>@lastMessage?.Author?.FirstName @lastMessage?.Author?.LastName</span>
                     }
                 </div>
 
                 <div class="last-message">
-                    @lastMessage.Content;
+                    @lastMessage?.Content;
                 </div>
             </a>
         </div>

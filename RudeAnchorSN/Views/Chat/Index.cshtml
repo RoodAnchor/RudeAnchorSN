@@ -9,20 +9,20 @@
 {
     <div class="message">
         <div class="message-author">
-            @if (message.Author.Email == User.Identity.Name)
+            @if (message?.Author?.Email == User?.Identity?.Name)
             {
                 <span>Вы</span>
             }
             else
             {
-                <span>@message.Author.FirstName @message.Author.LastName</span>
+                <span>@message?.Author?.FirstName @message?.Author?.LastName</span>
             }
         </div>
         <div class="message-content">
-            @message.Content
+            @message?.Content
         </div>
         <div class="message-date">
-            @message.Created
+            @message?.Created
         </div>
         <hr />
     </div>

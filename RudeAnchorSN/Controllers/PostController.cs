@@ -25,7 +25,7 @@ namespace RudeAnchorSN.Controllers
 
         [HttpGet]
         [Route("Add")]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return View();
         }
@@ -36,17 +36,20 @@ namespace RudeAnchorSN.Controllers
             string title, 
             string content)
         {
-            var user = await _userService.GetUser(User.Identity.Name);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
-            var newPost = new UserPostModel()
+            if (user != null)
             {
-                UserId = user.Id,
-                DateCreated = DateTime.Now,
-                Title = title,
-                Content = content
-            };
+                var newPost = new UserPostModel()
+                {
+                    UserId = user.Id,
+                    DateCreated = DateTime.Now,
+                    Title = title,
+                    Content = content
+                };
 
-            await _userPostService.CreatePost(newPost);
+                await _userPostService.CreatePost(newPost);
+            }
 
             return RedirectToAction("Index", "User");
         }

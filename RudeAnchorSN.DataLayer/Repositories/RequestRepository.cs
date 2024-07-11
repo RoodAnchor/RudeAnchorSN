@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RudeAnchorSN.DataLayer.DataBase;
 using RudeAnchorSN.DataLayer.Entities;
+using RudeAnchorSN.DataLayer.Exceptions;
 using RudeAnchorSN.DataLayer.Enums;
 
 namespace RudeAnchorSN.DataLayer.Repositories
@@ -16,7 +17,9 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task CreateRequest(int userId, int friendId)
         {
-            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId) 
+                ?? throw new UserNotFoundException();
+
             var newRequest = new RequestEntity() 
             {
                 UserId = userId,
@@ -28,7 +31,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<UserEntity>> GetPending(int userId)
+        public async Task<List<UserEntity?>> GetPending(int userId)
         {
             var all = await _dbContext.Requests.ToListAsync();
             var pending = all.Where(x => 
@@ -38,15 +41,14 @@ namespace RudeAnchorSN.DataLayer.Repositories
             return pending;
         }
 
-        public async Task<RequestEntity?> GetRequest(int userId, int friendId)
-        {
-            return await _dbContext.Requests
+        public async Task<RequestEntity?> GetRequest(int userId, int friendId) =>
+            await _dbContext.Requests
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.FriendId == friendId && x.RequestState == RequestStateEnum.Pending);
-        }
 
         public async Task Update(int reqestId, RequestStateEnum requestState)
         {
-            var request = await _dbContext.Requests.FirstOrDefaultAsync(x => x.Id == reqestId);
+            var request = await _dbContext.Requests.FirstOrDefaultAsync(x => x.Id == reqestId)
+                ?? throw new RequestNotFoundException();
 
             request.RequestState = requestState;
 

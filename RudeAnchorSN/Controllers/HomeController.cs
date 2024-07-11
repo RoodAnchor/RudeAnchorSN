@@ -13,7 +13,9 @@ namespace RudeAnchorSN.Controllers
 
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            var userIdentity = User?.Identity;
+
+            if (userIdentity != null && userIdentity.IsAuthenticated)
                 return RedirectToAction("Index", "User");
 
             return View();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RudeAnchorSN.DataLayer.DataBase;
 using RudeAnchorSN.DataLayer.Entities;
+using RudeAnchorSN.DataLayer.Exceptions;
 
 namespace RudeAnchorSN.DataLayer.Repositories
 {
@@ -15,8 +16,11 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task AddFriend(int userId, int friendId)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId) 
+                ?? throw new UserNotFoundException();
+
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId)
+                ?? throw new UserNotFoundException();
 
             user.Friends.Add(friend);
             friend.Friends.Add(user);
@@ -24,7 +28,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<UserEntity>> GetFriends(int userId)
+        public async Task<List<UserEntity?>> GetFriends(int userId)
         {
             var all = await _dbContext.UserFriends.ToListAsync();
             var userFriend = all.Where(x => x.UserId == userId)
@@ -36,8 +40,11 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task RemoveFriend(int userId, int friendId)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId)
+                ?? throw new UserNotFoundException();
+
+            var friend = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == friendId)
+                ?? throw new UserNotFoundException();
 
             user.Friends.Remove(friend);
             friend.Friends.Remove(user);

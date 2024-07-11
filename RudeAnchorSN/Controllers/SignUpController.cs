@@ -19,7 +19,7 @@ namespace RudeAnchorSN.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(UserModel user)
+        public IActionResult Index(UserModel user)
         {
             return View(user);
         }

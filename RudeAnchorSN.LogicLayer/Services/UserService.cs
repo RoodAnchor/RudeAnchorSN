@@ -23,8 +23,11 @@ namespace RudeAnchorSN.LogicLayer.Services
             _config = config;
         }
 
-        public async Task<UserModel> GetUser(String email)
+        public async Task<UserModel?> GetUser(string? email)
         {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email");
+
             var _user = await _repository.GetUser(email);
 
             if (_user is null)
@@ -35,7 +38,7 @@ namespace RudeAnchorSN.LogicLayer.Services
             return user;
         }
 
-        public async Task<UserModel> GetUser(int id)
+        public async Task<UserModel?> GetUser(int id)
         {
             var _user = await _repository.GetUser(id);
 
@@ -68,7 +71,7 @@ namespace RudeAnchorSN.LogicLayer.Services
             await _repository.CreateUser(_user);
         }
 
-        public async Task<UserModel> AuthenticateUser(string email, string password)
+        public async Task<UserModel?> AuthenticateUser(string? email, string? password)
         {
             if (string.IsNullOrEmpty(email) ||
                 string.IsNullOrEmpty(password))

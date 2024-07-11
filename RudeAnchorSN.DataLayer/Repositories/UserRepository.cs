@@ -24,14 +24,14 @@ namespace RudeAnchorSN.DataLayer.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<UserEntity> GetUser(int id) =>
+        public async Task<UserEntity?> GetUser(int id) =>
             await _dbContext
                 .Users
                 .Include(x => x.Posts)
                 .Include(x => x.Friends)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<UserEntity> GetUser(string email) =>
+        public async Task<UserEntity?> GetUser(string email) =>
             await _dbContext
                 .Users
                 .Include(x => x.Posts)
@@ -43,9 +43,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task UpdateUser(UserEntity user)
         {
-            var _user = await GetUser(user.Id);
-
-            if (_user is null) throw new UserNotFoundException();
+            var _user = await GetUser(user.Id)
+                ?? throw new UserNotFoundException();
 
             _user.FirstName = user.FirstName;
             _user.LastName = user.LastName;
@@ -58,9 +57,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task DeleteUser(int id)
         {
-            var user = await GetUser(id);
-
-            if (user is null) throw new UserNotFoundException();
+            var user = await GetUser(id)
+                ?? throw new UserNotFoundException();
 
             _dbContext.Users.Remove(user);
 

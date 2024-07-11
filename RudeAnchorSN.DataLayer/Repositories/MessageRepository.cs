@@ -29,16 +29,15 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task UpdateMessage(MessageEntity message)
         {
-            var _message = await GetMessage(message.Id);
-
-            if (_message is null) throw new MessageNotFoundException();
+            var _message = await GetMessage(message.Id)
+                ?? throw new MessageNotFoundException();
 
             _message.Content = message.Content;
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<MessageEntity> GetMessage(int id) =>
+        public async Task<MessageEntity?> GetMessage(int id) =>
             await _dbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<List<MessageEntity>> GetMessages() =>
@@ -46,9 +45,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task DeleteMessage(int id)
         {
-            var message = await GetMessage(id);
-
-            if (message is null) throw new MessageNotFoundException();
+            var message = await GetMessage(id)
+                ?? throw new MessageNotFoundException();
 
             _dbContext.Messages.Remove(message);
 

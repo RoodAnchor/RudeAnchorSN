@@ -7,9 +7,9 @@
 
 @{
     var requestsCount = Model.Requests.Count > 0 ? $"({Model.Requests.Count})" : string.Empty;
-    var ownPage = User.Identity.Name == Model.Email;
-    var isInFriends = Model.Friends.Any(x => x.Email == User.Identity.Name);
-    var newMessagesCount = Model.Chats.Where(x => x.HasNew && x.Messages.LastOrDefault().Author.Email != User.Identity.Name).Count();
+    var ownPage = User?.Identity?.Name == Model.Email;
+    var isInFriends = Model.Friends.Any(x => x.Email == User?.Identity?.Name);
+    var newMessagesCount = Model.Chats.Where(x => x.HasNew && x.Messages.LastOrDefault()?.Author?.Email != User?.Identity?.Name).Count();
 }
 
 <div>

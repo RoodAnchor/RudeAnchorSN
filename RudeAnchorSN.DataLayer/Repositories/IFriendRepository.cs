@@ -6,6 +6,6 @@ namespace RudeAnchorSN.DataLayer.Repositories
     {
         public Task AddFriend(int userId, int friendId);
         public Task RemoveFriend(int userId, int friendId);
-        public Task<List<UserEntity>> GetFriends(int userId);
+        public Task<List<UserEntity?>> GetFriends(int userId);
     }
 }

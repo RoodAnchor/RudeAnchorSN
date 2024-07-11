@@ -13,18 +13,23 @@
         <div>
             <label for="Email">
                 <span>Email</span>
-                <input type="text" name="Email" />
+                <input type="text" name="Email" required />
             </label>
         </div>
         
         <div>
             <label for="Password">
                 <span>Пароль</span>
-                <input type="password" name="Password" />
+                <input type="password" name="Password" required />
             </label>
         </div>
 
         <button type="submit">Авторизация</button>
+    }
+
+    @if(TempData["Error"] != null)
+    {
+        <div class="authentication-error">@TempData["Error"]</div>
     }
 </div>
 
@@ -34,21 +39,21 @@
         <div>
             <label for="FirstName">
                 <span>Имя</span>
-                <input type="text" name="FirstName" />
+                <input type="text" name="FirstName" required />
             </label>
         </div>
 
         <div>
             <label for="LastName">
                 <span>Фамилия</span>
-                <input type="text" name="LastName" />
+                <input type="text" name="LastName" required />
             </label>
         </div>
 
         <div>
             <label for="BirthDate">
                 <span>Дата рождения</span>
-                <input type="date" name="BirthDate" />
+                <input type="date" name="BirthDate" required />
             </label>
         </div>
 

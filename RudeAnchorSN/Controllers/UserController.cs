@@ -29,9 +29,13 @@ namespace RudeAnchorSN.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            user.Requests = await _requestService.GetPending(user.Id);
-            user.Chats = await _chatService.GetChats(user.Id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
+
+            if (user != null)
+            {
+                user.Requests = await _requestService.GetPending(user.Id);
+                user.Chats = await _chatService.GetChats(user.Id);
+            }
 
             return View(user);
         }
@@ -40,11 +44,14 @@ namespace RudeAnchorSN.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Index([FromRoute]int id)
         {
-            var currentUser = await _userService.GetUser(User.Identity.Name);
+            var currentUser = await _userService.GetUser(User?.Identity?.Name);
             var user = await _userService.GetUser(id);
 
-            user.Requests = await _requestService.GetPending(currentUser.Id);
-            user.Chats = await _chatService.GetChats(user.Id);
+            if (user != null && currentUser != null)
+            {
+                user.Requests = await _requestService.GetPending(currentUser.Id);
+                user.Chats = await _chatService.GetChats(user.Id);
+            }
 
             return View(user);
         }
@@ -53,7 +60,7 @@ namespace RudeAnchorSN.Controllers
         [Route("Edit")]
         public async Task<IActionResult> Edit()
         {
-            var user = await _userService.GetUser(User.Identity.Name);
+            var user = await _userService.GetUser(User?.Identity?.Name);
 
             return View(user);
         }

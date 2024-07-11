@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RudeAnchorSN.LogicLayer.Models;
 using RudeAnchorSN.LogicLayer.Services;
 
 namespace RudeAnchorSN.Controllers
@@ -25,8 +26,12 @@ namespace RudeAnchorSN.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userService.GetUser(User.Identity.Name);
-            var chats = await _chatService.GetChats(user.Id);
+            var user = await _userService.GetUser(User?.Identity?.Name);
+
+            var chats = new List<ChatModel>();
+
+            if (user != null)
+                chats = await _chatService.GetChats(user.Id);
 
             return View(chats);
         }

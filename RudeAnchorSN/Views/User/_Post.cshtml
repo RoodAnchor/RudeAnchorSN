@@ -1,7 +1,7 @@
 ﻿@model RudeAnchorSN.LogicLayer.Models.UserPostViewModel
 
 @{
-    var ownPage = User.Identity.Name == Model.Author.Email;
+    var ownPage = User?.Identity?.Name == Model.Author.Email;
 }
 
 <div class="post">
