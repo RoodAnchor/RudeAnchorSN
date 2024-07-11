@@ -1,0 +1,56 @@
+﻿main {
+    display: block;
+}
+
+#profile-picture-placeholder {
+    width: 200px;
+    height: 200px;
+    border: 1px dashed lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.wall {
+    position: relative;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.menu{
+    margin-right: 10px;
+    width: 17%;
+}
+
+.menu-item {
+}
+
+.menu-item > a {
+    color: #1e2a3c;
+    display: block;
+    padding: 10px;
+}
+
+.menu-item:hover {
+    background-color: lightgray;
+}
+
+.content-container {
+    flex: 1;
+}
+
+.profile-data{
+    margin-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.profile-data > div{
+    margin-bottom: 20px;
+}
+
+.add-post-button {
+    position: absolute;
+    right: 0px;
+}

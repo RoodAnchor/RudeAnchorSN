@@ -7,46 +7,58 @@
 
 @section css {
     <link rel="stylesheet" href="~/css/editProfile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/forms.css" asp-append-version="true" />
 }
 
 @section Scripts {
     <script type="text/javascript" src="~/js/editProfile.js"></script>
 }
 
-<h1>Редактирование профиля</h1>
+<div class="heading round-corner-box">
+    <h1>Редактирование профиля</h1>
+</div>
 
-@using (Html.BeginForm("Edit", "User", FormMethod.Post))
-{
-    <div>
-        <div>Фото профиля</div>
-        <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)">
-            <input id="profile-pic-input" type="file" accept=".png,.jpeg,.jpg" name="ProfilePic">
+<div class="form-container">
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+    {
+        <div class="form-line">
+            <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)">
+                @if (string.IsNullOrEmpty(Model.ProfilePicUrl))
+                {
+                    <div class="profile-pic-fallback"></div>
+                }
+            </div>
+            <div>
+                <label for="profile-pic-input" class="button profile-pic-input-label">Добавить фото</label>
+                <input id="profile-pic-input" type="file" accept=".png,.jpeg,.jpg" name="ProfilePic" style="display:none;">
+            </div>
         </div>
-    </div>
 
-    <div>
-        <label for="FirstName">
-            <span>Имя</span>
+        <div class="form-line">
+            <div class="form-label">Имя</div>
             <input type="text" name="FirstName" value="@Model.FirstName" required />
-        </label>
-    </div>
+        </div>
 
-    <div>
-        <label for="LastName">
-            <span>Фамилия</span>
+        <div class="form-line">
+            <div class="form-label">Фамилия</div>
             <input type="text" name="LastName" value="@Model.LastName" required />
-        </label>
-    </div>
+        </div>
 
-    <div>
-        <label for="Email">
-            <span>Email</span>
+        <div class="form-line">
+            <div class="form-label">Email</div>
             <input type="text" readonly name="Email" value="@Model.Email" required />
-        </label>
-    </div>
+        </div>
 
-    <input type="hidden" name="ProfilePicUrl" id="profile-pic-hidden" value="@Model.ProfilePicUrl" />
-    <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="ProfilePicUrl" id="profile-pic-hidden" value="@Model.ProfilePicUrl" />
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="LastOnline" value="@Model.LastOnline" />
+        <input type="hidden" name="BirthDate" value="@Model.BirthDate" />
 
-    <button type="submit">Сохранить изменения</button>
-}
+        <div class="form-line">
+            <div class="col-splitter">
+                <button type="submit" style="margin-right: 10px;">Сохранить изменения</button>
+                <a asp-action="Index" asp-controller="User" class="button secondary">Отмента</a>
+            </div>
+        </div>
+    }
+</div>

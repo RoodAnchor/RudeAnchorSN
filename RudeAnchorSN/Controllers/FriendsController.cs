@@ -49,7 +49,7 @@ namespace RudeAnchorSN.Controllers
             var users = new List<UserModel>();
                 
             if (user != null)
-                await _userService.GetUsers(user.Id);
+                users = await _userService.GetUsers(user.Id);
 
             return View(users);
         }

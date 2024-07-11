@@ -5,10 +5,32 @@
     ViewData["Title"] = "Найди друзей";
 }
 
-<div class="users-container">
+@section css{
+    <link rel="stylesheet" href="/css/friends.css" />
+}
+
+<div class="heading round-corner-box">
+    <h1>Зарегестрированные пользователи</h1>
+</div>
+
+<div class="users-container round-corner-box">
+
+    <a asp-action="Index" asp-controller="Friends" class="button secondary right">Отмена</a>
+
+    @if(Model.Count == 0)
+    {
+        <p>Видимо кроме вас больше никто не зарегестировался...</p>
+    }
+
     @foreach(var user in Model)
     {
         <div class="user">
+            <div class="user-picture-thumb" style="background-image: url(@user.ProfilePicUrl)">
+                @if (string.IsNullOrEmpty(user.ProfilePicUrl))
+                {
+                    <div class="profile-pic-fallback-thumb"></div>
+                }
+            </div>
             <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
                 @user.FirstName @user.LastName
             </a>

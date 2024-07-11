@@ -3,18 +3,32 @@
     ViewData["Title"] = "Добавить запись на стену";
 }
 
-<h1>Добавить запись</h1>
-@using(Html.BeginForm("Add", "Post", FormMethod.Post))
-{
-    <div>
-        <span>Заголовок</span>
-        <input type="text" name="title" required>
-    </div>
-
-    <div>
-        <span>Содержание</span>
-        <textarea name="content" wrap="hard" required></textarea>
-    </div>
-
-    <button type="submit">Добавить</button>
+@section css{
+    <link rel="stylesheet" href="/css/forms.css" />
 }
+
+<div class="heading round-corner-box">
+    <h1>Добавить запись</h1>
+</div>
+
+<div class="form-container">
+    @using (Html.BeginForm("Add", "Post", FormMethod.Post))
+    {
+        <div class="form-line">
+            <div class="form-label">Заголовок</div>
+            <input type="text" name="title" required>
+        </div>
+
+        <div class="form-line">
+            <div class="form-label">Содержание</div>
+            <textarea name="content" wrap="hard" required></textarea>
+        </div>
+
+        <div class="form-line">
+            <div class="col-splitter">
+                <button type="submit" style="margin-right: 10px;">Добавить</button>
+                <a asp-action="Index" asp-controller="User" class="button secondary">Отмента</a>
+            </div>
+        </div>
+    }
+</div>

@@ -5,36 +5,52 @@
     ViewData["Title"] = "Друзья";
 }
 
-<h1>Друзья</h1>
-
-<a asp-action="Add" asp-controller="Friends">Найти друзей</a>
+<div class="heading round-corner-box">
+    <h1>Друзья</h1>
+</div>
 
 @if(Model.PendingRequests.Count > 0)
 {
-    <h2>Заявки в друзья</h2>
-    <div class="friends-container">
-        @foreach (var user in Model.PendingRequests)
-        {
-            <div class="friend">
-                <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
-                    <div class="friend-name">
-                        @user.FirstName @user.LastName
-                    </div>
-                </a>
-                <a asp-action="Accept" asp-controller="Friends" asp-route-id="@user.Id">
-                    Принять
-                </a>
-                <a asp-action="Reject" asp-controller="Friends" asp-route-id="@user.Id">
-                    Отклонить
-                </a>
-            </div>
-        }
+    <div class="round-corner-box">
+        <h2>Заявки в друзья</h2>
+        <div class="friends-container">
+            @foreach (var user in Model.PendingRequests)
+            {
+                <div class="friend">
+                    <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                        <div class="friend-name">
+                            @user.FirstName @user.LastName
+                        </div>
+                    </a>
+                    <a asp-action="Accept" asp-controller="Friends" asp-route-id="@user.Id">
+                        Принять
+                    </a>
+                    <a asp-action="Reject" asp-controller="Friends" asp-route-id="@user.Id">
+                        Отклонить
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 }
 
-@if (Model.Friends.Count > 0)
-{
+<div class="round-corner-box">
     <h2>У вас в друзьях</h2>
+
+    @if (Model.Friends.Count == 0)
+    {
+        <p>...никого нет...</p>
+    }
+
+    <div>
+        <a asp-action="Add" asp-controller="Friends" class="button" style="width: auto;">
+            <span>Найти друзей</span>
+            <span class="plus-icon"></span>
+        </a>
+        <a asp-action="Index" asp-controller="User" class="button secondary" style="width: auto;">
+            <span>Отмена</span>
+        </a>
+    </div>
 
     <div class="friends-container">
         @foreach (var user in Model.Friends)
@@ -51,4 +67,4 @@
             </div>
         }
     </div>
-}
+</div>

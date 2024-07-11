@@ -15,7 +15,7 @@
     <header>
         @if (userIdentity != null && userIdentity.IsAuthenticated)
         {
-            <a asp-action="Index" asp-controller="SignOut">Выход</a>
+            <a asp-action="Index" asp-controller="SignOut" class="sign-out-button"></a>
         }
     </header>
     <div class="container">

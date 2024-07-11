@@ -1,0 +1,21 @@
+﻿.wrapper{
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+
+.home-forms {
+    flex-shrink: 0;
+    width: 30%;
+}
+
+.spoiler-block {
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.registration-form {
+    margin-top: 20px;
+}

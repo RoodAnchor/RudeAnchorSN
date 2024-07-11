@@ -5,37 +5,38 @@
     ViewData["Title"] = "Регистрация";
 }
 
-@using(Html.BeginForm("Index", "SignUp", FormMethod.Post))
-{
-    <div>
-        <label for="FirstName">
-            <span>Имя</span>
-            <input type="text" name="FirstName" value="@Model.FirstName" required />
-        </label>
-    </div>
-
-    <div>
-        <label for="LastName">
-            <span>Фамилия</span>
-            <input type="text" name="LastName" value="@Model.LastName" required />
-        </label>
-    </div>
-
-    <div>
-        <label for="Email">
-            <span>Email</span>
-            <input type="text" name="Email" required />
-        </label>
-    </div>
-
-    <div>
-        <label for="Password">
-            <span>Пароль</span>
-            <input type="password" name="Password" required />
-        </label>
-    </div>
-
-    <input type="hidden" value="@Model.BirthDate" name="BirthDate" required />
-
-    <button type="submit">Завершить регистрацию</button>
+@section css {
+    <link rel="stylesheet" href="/css/forms.css" />
+    <link rel="stylesheet" href="/css/signUp.css" />
 }
+
+<div class="form-container">
+    @using (Html.BeginForm("Index", "SignUp", FormMethod.Post))
+    {
+        <div class="form-line">
+            <div class="form-label">Имя</div>
+            <input type="text" name="FirstName" value="@Model.FirstName" required />
+        </div>
+
+        <div class="form-line">
+            <div class="form-label">Фамилия</div>
+            <input type="text" name="LastName" value="@Model.LastName" required />
+        </div>
+
+        <div class="form-line">
+            <div class="form-label">Email</div>
+            <input type="email" name="Email" required />
+        </div>
+
+        <div class="form-line">
+            <div class="form-label">Пароль</div>
+            <input type="password" name="Password" required />
+        </div>
+
+        <input type="hidden" value="@Model.BirthDate" name="BirthDate" required />
+
+        <div class="form-line">
+            <button type="submit">Завершить регистрацию</button>
+        </div>
+    }
+</div>

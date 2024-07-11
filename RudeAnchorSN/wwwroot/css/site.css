@@ -1,31 +1,128 @@
+@font-face{
+    font-family: "FontAwesomeRegular";
+    src: url("../fonts/fa-regular-400.woff2") format('woff2');
+}
+
+@font-face {
+    font-family: "FontAwesomeSolid";
+    src: url("../fonts/fa-solid-900.woff2") format('woff2');
+}
+
+html, body{
+    margin: 0px;
+    padding: 0px;
+    font-family: Tahoma;
+    height: 100%;
+}
+
 html {
-  font-size: 14px;
+    background-color: #1e2a3c;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+h1, h2 {
+    color: #1e2a3c;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.sign-out-button{
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    padding: 20px;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.sign-out-button:after {
+    font: normal normal normal 14px / 1 FontAwesomeSolid;
+    content: "\f2f5";
+    font-size: 2rem;
+    color: white;
+    position: relative;
 }
 
-body {
-  margin-bottom: 60px;
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100%;
 }
 
-#profile-picture-placeholder {
-    width: 150px;
-    height: 200px;
-    border: 1px dashed lightgray;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+main {
+    width: 1200px;
+}
+
+.error-text{
+    color: red;
+}
+
+a{
+    text-decoration: none;
+}
+
+a.button{
+    display: inline-block;
+}
+
+button[type="submit"],
+.button{
+    border: none;
+    color: white;
+    background: #1e2a3c;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.button.secondary{
+    background-color: lightgray;
+}
+
+button[type="submit"]:hover,
+.button:hover {
+    background-color: #8dc593;
+    cursor: pointer;
+}
+
+.plus-icon:after {
+    font: normal normal normal 14px / 1 FontAwesomeSolid;
+    content: "\f055";
+    color: white;
+    position: relative;
+}
+
+.round-corner-box {
+    padding: 40px;
+    background-color: #e9e9e9;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.heading {
+    margin-top: 10px;
+    padding: 10px 40px;
+}
+
+.profile-pic-fallback {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.profile-pic-fallback::after {
+    font: normal normal normal 14px / 1 FontAwesomeRegular;
+    content: "\f007";
+    font-size: 5.4rem;
+    color: lightgray;
+    position: relative;
+    top: 30%;
+}
+
+.col-splitter{
+    display: flex;
+}
+
+.right {
+    position: absolute;
+    right: 40px;
+    width: auto;
 }

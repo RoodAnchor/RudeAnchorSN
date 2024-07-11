@@ -12,37 +12,38 @@
     var newMessagesCount = Model.Chats.Where(x => x.HasNew && x.Messages.LastOrDefault()?.Author?.Email != User?.Identity?.Name).Count();
 }
 
-<div>
+@section css{
+    <link rel="stylesheet" href="/css/user.css" />
+}
+
+<div class="heading round-corner-box">
     <h1>
         @Model.FirstName @Model.LastName
     </h1>
+</div>
 
-    <div class="profile-data">
-        <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)"></div>
-
-        <div class="date-of-birth">
-            День рождения: @Model.BirthDate.ToShortDateString() (@Model.Age лет)
+<div class="wrapper">
+    <div class="menu round-corner-box">
+        <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)">
+            @if (string.IsNullOrEmpty(Model.ProfilePicUrl))
+            {
+                <div class="profile-pic-fallback"></div>
+            }
         </div>
 
-        <div class="last-online">
-            Последний раз онлайн: @Model.LastOnline
-        </div>
-    </div>
-
-    <div class="menu">
         @if (ownPage)
         {
-            <div>
+            <div class="menu-item">
                 <a asp-action="Edit">
                     Редактировать профиль
                 </a>
             </div>
-            <div>
+            <div class="menu-item">
                 <a asp-action="Index" asp-controller="Messages">
                     Сообщения @(newMessagesCount > 0 ? $"({newMessagesCount})" : string.Empty)
                 </a>
             </div>
-            <div>
+            <div class="menu-item">
                 <a asp-action="Index" asp-controller="Friends">
                     Друзья @requestsCount
                 </a>
@@ -50,7 +51,7 @@
         }
         else
         {
-            <div>
+            <div class="menu-item">
                 @if (Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
                 {
                     <a asp-action="Accept" asp-controller="Friends" asp-route-id="@Model.Id">
@@ -79,19 +80,34 @@
         }
     </div>
 
-    <div class="wall">
-        @if (ownPage)
-        {
-            <div class="add-post-button">
-                <a asp-action="Add" asp-controller="Post">Добавить пост</a>
+    <div class="content-container round-corner-box">
+        <div class="profile-data">
+            <div class="date-of-birth">
+                День рождения: @Model.BirthDate.ToShortDateString() (@Model.Age лет)
             </div>
-        }
-        
-        <div class="posts">
-            @foreach(var post in Model.Posts)
+
+            <div class="last-online">
+                Последний раз онлайн: @Model.LastOnline
+            </div>
+        </div>
+
+        <div class="wall">
+            @if (ownPage)
             {
-                <partial name="_Post.cshtml" model="new RudeAnchorSN.LogicLayer.Models.UserPostViewModel(Model, post)"/>
+                <div class="add-post-button">
+                    <a asp-action="Add" asp-controller="Post" class="button">
+                        <span>Добавить пост</span>
+                        <span class="plus-icon"></span>
+                    </a>
+                </div>
             }
+
+            <div class="posts">
+                @foreach (var post in Model.Posts)
+                {
+                    <partial name="_Post.cshtml" model="new RudeAnchorSN.LogicLayer.Models.UserPostViewModel(Model, post)" />
+                }
+            </div>
         </div>
     </div>
 </div>

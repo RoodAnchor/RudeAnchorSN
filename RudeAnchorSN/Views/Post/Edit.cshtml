@@ -8,17 +8,22 @@
 <h1>Править запись</h1>
 
 <form action="/Post/Edit" method="post">
-    <div>
-        <span>Заголовок</span>
+    <div class="form-line">
+        <div class="form-label">Заголовок</div>
         <input type="text" name="title" value="@Model.Title" required>
     </div>
 
-    <div>
-        <span>Содержание</span>
+    <div class="form-line">
+        <div class="form-label">Содержание</div>
         <textarea name="content" wrap="hard" required>@Model.Content</textarea>
     </div>
 
     <input type="hidden" name="id" value="@Model.Id" />
-
-    <button type="submit">Сохранить</button>
+    
+    <div class="form-line">
+        <div class="col-splitter">
+            <button type="submit" style="margin-right: 10px;">Сохранить</button>
+            <a asp-action="Index" asp-controller="User" class="button secondary">Отмента</a>
+        </div>
+    </div>
 </form>

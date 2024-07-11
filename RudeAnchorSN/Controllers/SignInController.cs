@@ -28,7 +28,7 @@ namespace RudeAnchorSN.Controllers
             {
                 var _user = await _userService.AuthenticateUser(email, password);
 
-                if (_user == null)
+                if (_user != null)
                 {
                     var claims = new List<Claim>()
                     {

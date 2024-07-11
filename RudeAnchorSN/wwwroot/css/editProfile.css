@@ -1,1 +1,18 @@
-﻿
+﻿main{
+    display: block;
+}
+
+#profile-picture-placeholder {
+    width: 200px;
+    height: 200px;
+    border: 1px dashed lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-pic-input-label {
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+}
