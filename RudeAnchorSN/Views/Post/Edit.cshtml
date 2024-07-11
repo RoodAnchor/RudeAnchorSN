@@ -10,12 +10,12 @@
 <form action="/Post/Edit" method="post">
     <div>
         <span>Заголовок</span>
-        <input type="text" name="title" value="@Model.Title">
+        <input type="text" name="title" value="@Model.Title" required>
     </div>
 
     <div>
         <span>Содержание</span>
-        <textarea name="content" wrap="hard">@Model.Content</textarea>
+        <textarea name="content" wrap="hard" required>@Model.Content</textarea>
     </div>
 
     <input type="hidden" name="id" value="@Model.Id" />
