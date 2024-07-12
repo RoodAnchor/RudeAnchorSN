@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RudeAnchorSN.DataLayer.Exceptions;
 using RudeAnchorSN.LogicLayer.Models;
 using RudeAnchorSN.LogicLayer.Services;
 
@@ -27,9 +28,18 @@ namespace RudeAnchorSN.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(UserModel user)
         {
-            await _userService.RegisterUser(user);
+            try
+            {
+                await _userService.RegisterUser(user);
+            }
+            catch (UserExistException)
+            {
+                TempData["Error"] = "Данный Email уже зарегестрирован в системе";
 
-            return RedirectToAction("index", "Home");
+                return RedirectToAction("Index", "SignUp");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

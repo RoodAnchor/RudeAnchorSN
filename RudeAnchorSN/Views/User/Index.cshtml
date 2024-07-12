@@ -7,9 +7,11 @@
 
 @{
     var requestsCount = Model.Requests.Count > 0 ? $"({Model.Requests.Count})" : string.Empty;
-    var ownPage = User?.Identity?.Name == Model.Email;
+    var isOwnPage = User?.Identity?.Name == Model.Email;
     var isInFriends = Model.Friends.Any(x => x.Email == User?.Identity?.Name);
     var newMessagesCount = Model.Chats.Where(x => x.HasNew && x.Messages.LastOrDefault()?.Author?.Email != User?.Identity?.Name).Count();
+    var chat = Model.Chats.FirstOrDefault(x => x.Users.Any(y => y.Email == User?.Identity?.Name));
+    var chatId = chat is null ? -1 : chat.Id;
 }
 
 @section css{
@@ -22,6 +24,16 @@
     </h1>
 </div>
 
+@if (!isOwnPage)
+{
+    <div class="breadcrumbs">
+        <a asp-action="Index" asp-controller="Friends" class="right white">
+            <span class="arrow-left-icon white"></span>
+            <span class="white">Назад</span>
+        </a>
+    </div>
+}
+
 <div class="wrapper">
     <div class="menu round-corner-box">
         <div id="profile-picture-placeholder" style="background-image: url(@Model.ProfilePicUrl)">
@@ -31,7 +43,7 @@
             }
         </div>
 
-        @if (ownPage)
+        @if (isOwnPage)
         {
             <div class="menu-item">
                 <a asp-action="Edit">
@@ -51,32 +63,39 @@
         }
         else
         {
-            <div class="menu-item">
-                @if (Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
-                {
+            @if (Model.Requests.FirstOrDefault(x => x.Id == Model.Id) != null)
+            {
+                <div class="menu-item">
                     <a asp-action="Accept" asp-controller="Friends" asp-route-id="@Model.Id">
                         Принять
                     </a>
+                </div>
+
+                <div class="menu-item">
                     <a asp-action="Reject" asp-controller="Friends" asp-route-id="@Model.Id">
                         Отклонить
                     </a>
-                }
-                else
+                </div>
+            }
+            else
+            {
+                if (!isInFriends)
                 {
-                    if (!isInFriends)
-                    {
+                    <div class="menu-item">
                         <a asp-action="Add" asp-controller="Friends" asp-route-id="@Model.Id">
                             Добавить в друзья
                         </a>
-                    }
-                    else
-                    {
-                        <a asp-action="Index" asp-controller="Chat" asp-route-id="-1" asp-route-userId="@Model.Id">
+                    </div>
+                }
+                else
+                {
+                    <div class="menu-item">
+                        <a asp-action="Index" asp-controller="Chat" asp-route-id="@chatId" asp-route-userId="@Model.Id">
                             Написать сообщение
                         </a>
-                    }
+                    </div>
                 }
-            </div>
+            }
         }
     </div>
 
@@ -92,9 +111,9 @@
         </div>
 
         <div class="wall">
-            @if (ownPage)
+            @if (isOwnPage)
             {
-                <div class="add-post-button">
+                <div class="post-button">
                     <a asp-action="Add" asp-controller="Post" class="button">
                         <span>Добавить пост</span>
                         <span class="plus-icon"></span>

@@ -16,7 +16,7 @@ namespace RudeAnchorSN.LogicLayer.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
-        public UserService(IMapper mapper, IConfiguration config )
+        public UserService(IMapper mapper, IConfiguration config)
         {
             _repository = new UserRepository(RSNContext.GetInstance(config));
             _mapper = mapper;

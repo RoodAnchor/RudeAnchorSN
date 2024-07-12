@@ -77,5 +77,14 @@ namespace RudeAnchorSN.Controllers
 
             return RedirectToAction("Index", new { id = chatId });
         }
+
+        [HttpGet]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _chatService.RemoveChat(id);
+
+            return RedirectToAction("Index", "Messages");
+        }
     }
 }

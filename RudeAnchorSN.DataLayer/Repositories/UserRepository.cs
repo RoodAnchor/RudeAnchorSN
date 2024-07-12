@@ -16,6 +16,10 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task CreateUser(UserEntity user)
         {
+            var _user = await GetUser(user.Email);
+
+            if (_user != null) throw new UserExistException();
+
             var entry = _dbContext.Entry(user);
 
             if (entry.State == EntityState.Detached)

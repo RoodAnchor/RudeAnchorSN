@@ -15,6 +15,11 @@
     position: relative;
 }
 
+.wall .post-date{
+    text-align: right;
+    margin-bottom: 10px;
+}
+
 .wrapper {
     display: flex;
 }
@@ -50,7 +55,11 @@
     margin-bottom: 20px;
 }
 
-.add-post-button {
-    position: absolute;
-    right: 0px;
+.post-button {
+    display: flex;
+    justify-content: right;
+}
+
+.post-button > a {
+    width: auto;
 }

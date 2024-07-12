@@ -40,7 +40,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task DeleteChat(int id)
         {
-            var chat = await _dbContext.Chats.FirstOrDefaultAsync(x => x.Id == id)
+            var chat = await _dbContext.Chats.Include(x => x.Messages).FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new ChatNotFoundException();
 
             _dbContext.Chats.Remove(chat);
@@ -49,10 +49,16 @@ namespace RudeAnchorSN.DataLayer.Repositories
         }
 
         public async Task<ChatEntity?> GetChat(int id) =>
-            await _dbContext.Chats.FirstOrDefaultAsync(x => x.Id == id);
+            await _dbContext.Chats
+                .Include(x => x.Messages)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<List<ChatEntity>> GetChats(int userId) => 
-            await _dbContext.Chats.Where(x => x.Users.Any(y => y.Id == userId)).ToListAsync();
+            await _dbContext.Chats
+                .Include(x => x.Messages)
+                .Include(x => x.Users)
+                .Where(x => x.Users.Any(y => y.Id == userId))
+                .ToListAsync();
 
         public async Task AddMessage(int chatId, int messageId)
         {

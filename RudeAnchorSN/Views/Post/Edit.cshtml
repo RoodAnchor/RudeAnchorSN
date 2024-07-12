@@ -5,25 +5,33 @@
     ViewData["Title"] = "Правка записи";
 }
 
-<h1>Править запись</h1>
+@section css {
+    <link rel="stylesheet" href="/css/forms.css" />
+}
 
-<form action="/Post/Edit" method="post">
-    <div class="form-line">
-        <div class="form-label">Заголовок</div>
-        <input type="text" name="title" value="@Model.Title" required>
-    </div>
+<div class="heading round-corner-box">
+    <h1>Править запись</h1>
+</div>
 
-    <div class="form-line">
-        <div class="form-label">Содержание</div>
-        <textarea name="content" wrap="hard" required>@Model.Content</textarea>
-    </div>
-
-    <input type="hidden" name="id" value="@Model.Id" />
-    
-    <div class="form-line">
-        <div class="col-splitter">
-            <button type="submit" style="margin-right: 10px;">Сохранить</button>
-            <a asp-action="Index" asp-controller="User" class="button secondary">Отмента</a>
+<div class="form-container">
+    <form action="/Post/Edit" method="post">
+        <div class="form-line">
+            <div class="form-label">Заголовок</div>
+            <input type="text" name="title" value="@Model.Title" required>
         </div>
-    </div>
-</form>
+
+        <div class="form-line">
+            <div class="form-label">Содержание</div>
+            <textarea name="content" wrap="hard" required>@Model.Content</textarea>
+        </div>
+
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <div class="form-line">
+            <div class="col-splitter">
+                <button type="submit" style="margin-right: 10px;">Сохранить</button>
+                <a asp-action="Index" asp-controller="User" class="button secondary">Отмента</a>
+            </div>
+        </div>
+    </form>
+</div>

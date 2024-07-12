@@ -36,7 +36,15 @@
         <input type="hidden" value="@Model.BirthDate" name="BirthDate" required />
 
         <div class="form-line">
-            <button type="submit">Завершить регистрацию</button>
+            <div class="col-splitter">
+                <button type="submit" style="margin-right: 10px;">Завершить регистрацию</button>
+                <a asp-action="Index" asp-controller="Home" class="button secondary">Отмента</a>
+            </div>
         </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="error-text registration-error">@TempData["Error"]</div>
     }
 </div>

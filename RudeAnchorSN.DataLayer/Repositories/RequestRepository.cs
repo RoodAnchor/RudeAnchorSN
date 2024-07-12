@@ -33,7 +33,7 @@ namespace RudeAnchorSN.DataLayer.Repositories
 
         public async Task<List<UserEntity?>> GetPending(int userId)
         {
-            var all = await _dbContext.Requests.ToListAsync();
+            var all = await _dbContext.Requests.Include(x => x.Friend).ToListAsync();
             var pending = all.Where(x => 
                     x.UserId == userId && x.RequestState == RequestStateEnum.Pending)
                 .Select(x => x.Friend).ToList();

@@ -16,6 +16,8 @@ textarea {
     background-color: white;
     border-radius: 5px;
     width: calc(100% - 20px);
+    font-size: 1rem;
+    font-family: Tahoma;
 }
 
 textarea{

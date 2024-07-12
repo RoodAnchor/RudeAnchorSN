@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using RudeAnchorSN.DataLayer.Exceptions;
 using RudeAnchorSN.LogicLayer.Services;
+using System.Security.Authentication;
 using System.Security.Claims;
 
 namespace RudeAnchorSN.Controllers
@@ -43,6 +44,12 @@ namespace RudeAnchorSN.Controllers
             catch (UserNotFoundException)
             {
                 TempData["Error"] = "Пользователь не найден";
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (AuthenticationException)
+            {
+                TempData["Error"] = "Неверный пароль";
 
                 return RedirectToAction("Index", "Home");
             }

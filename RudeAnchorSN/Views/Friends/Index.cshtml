@@ -9,32 +9,44 @@
     <h1>Друзья</h1>
 </div>
 
+<div class="breadcrumbs">
+    <a asp-action="Index" asp-controller="User" class="right white">
+        <span class="arrow-left-icon white"></span>
+        <span class="white">Назад</span>
+    </a>
+</div>
+
 @if(Model.PendingRequests.Count > 0)
 {
-    <div class="round-corner-box">
+    <div class="users-container round-corner-box">
         <h2>Заявки в друзья</h2>
-        <div class="friends-container">
-            @foreach (var user in Model.PendingRequests)
-            {
-                <div class="friend">
-                    <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
-                        <div class="friend-name">
-                            @user.FirstName @user.LastName
-                        </div>
-                    </a>
-                    <a asp-action="Accept" asp-controller="Friends" asp-route-id="@user.Id">
+        @foreach (var user in Model.PendingRequests)
+        {
+            <div class="user">
+                <div class="user-picture-thumb" style="background-image: url(@user?.ProfilePicUrl)">
+                    @if (string.IsNullOrEmpty(user?.ProfilePicUrl))
+                    {
+                        <div class="profile-pic-fallback-thumb"></div>
+                    }
+                </div>
+                <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                    @user.FirstName @user.LastName
+                </a>
+
+                <div class="buttons right">
+                    <a asp-action="Accept" asp-controller="Friends" asp-route-id="@user.Id" class="button">
                         Принять
                     </a>
-                    <a asp-action="Reject" asp-controller="Friends" asp-route-id="@user.Id">
+                    <a asp-action="Reject" asp-controller="Friends" asp-route-id="@user.Id" class="button secondary">
                         Отклонить
                     </a>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
 }
 
-<div class="round-corner-box">
+<div class="users-container round-corner-box">
     <h2>У вас в друзьях</h2>
 
     @if (Model.Friends.Count == 0)
@@ -42,29 +54,31 @@
         <p>...никого нет...</p>
     }
 
-    <div>
+    <div style="margin: 10px 0px;">
         <a asp-action="Add" asp-controller="Friends" class="button" style="width: auto;">
             <span>Найти друзей</span>
             <span class="plus-icon"></span>
         </a>
-        <a asp-action="Index" asp-controller="User" class="button secondary" style="width: auto;">
-            <span>Отмена</span>
-        </a>
     </div>
 
-    <div class="friends-container">
-        @foreach (var user in Model.Friends)
-        {
-            <div class="friend">
-                <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
-                    <div class="friend-name">
-                        @user.FirstName @user.LastName
-                    </div>
-                </a>
-                <a asp-action="Remove" asp-controller="Friends" asp-route-id="@user.Id">
+    @foreach (var user in Model.Friends)
+    {
+        <div class="user">
+            <div class="user-picture-thumb" style="background-image: url(@user?.ProfilePicUrl)">
+                @if (string.IsNullOrEmpty(user?.ProfilePicUrl))
+                {
+                    <div class="profile-pic-fallback-thumb"></div>
+                }
+            </div>
+            <a asp-action="Index" asp-controller="User" asp-route-id="@user.Id">
+                @user.FirstName @user.LastName
+            </a>
+
+            <div class="buttons right">
+                <a asp-action="Remove" asp-controller="Friends" asp-route-id="@user.Id" class="button secondary">
                     Убрать из друзей
                 </a>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>

@@ -5,40 +5,69 @@
     ViewData["Title"] = "Чат";
 }
 
-@foreach(var message in Model.Messages.OrderBy(x => x.Created))
-{
-    <div class="message">
-        <div class="message-author">
-            @if (message?.Author?.Email == User?.Identity?.Name)
-            {
-                <span>Вы</span>
-            }
-            else
-            {
-                <span>@message?.Author?.FirstName @message?.Author?.LastName</span>
-            }
-        </div>
-        <div class="message-content">
-            @message?.Content
-        </div>
-        <div class="message-date">
-            @message?.Created
-        </div>
-        <hr />
-    </div>
+@section css{
+    <link rel="stylesheet" href="~/css/forms.css" />
+    <link rel="stylesheet" href="~/css/messages.css" />
 }
 
-@using(Html.BeginForm("SendMessage", "Chat", FormMethod.Post))
-{
-    <div>
-        <div>
-            <span>Сообщение</span>
+<div class="heading round-corner-box">
+    <h1>
+        Сообщения
+    </h1>
+</div>
+
+<div class="breadcrumbs">
+    <a asp-action="Index" asp-controller="User" class="right white">
+        <span class="arrow-left-icon white"></span>
+        <span class="white">Назад</span>
+    </a>
+</div>
+
+<div class="messages-container round-corner-box">
+    @foreach (var message in Model.Messages.OrderBy(x => x.Created))
+    {
+        var IsOwnMessage = message?.Author?.Email == User?.Identity?.Name;
+
+        <div class="message @(IsOwnMessage ? "push-right" : null)">
+            <div class="message-author">
+                @if (IsOwnMessage)
+                {
+                    <span>
+                        <strong>Вы</strong>
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        <strong>
+                            @message?.Author?.FirstName @message?.Author?.LastName
+                        </strong>
+                    </span>
+                }
+            </div>
+            <div class="message-date">
+                <em>@message?.Created</em>
+            </div>
+            <div class="message-content">
+                @message?.Content
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="form-container">
+    @using (Html.BeginForm("SendMessage", "Chat", FormMethod.Post))
+    {
+        <div class="form-line">
+            <div class="form-label">Сообщение</div>
             <input type="text" name="content" required />
         </div>
-        
+
         <input type="hidden" name="chatId" value="@Model.Id">
 
-        <button type="submit">Отправить</button>
-
-    </div>
-}
+        <div class="form-line">
+            <button type="submit">Отправить</button>
+        </div>
+    }
+</div>

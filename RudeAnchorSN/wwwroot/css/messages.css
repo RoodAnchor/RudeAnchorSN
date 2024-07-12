@@ -1,0 +1,20 @@
+﻿.chats-container .chat {
+    display: flex;
+    border-bottom: 1px solid lightgray;
+}
+
+.chats-container .last-message {
+    margin: 10px 0px;
+}
+
+.messages-container .message {
+    margin-bottom: 10px;
+}
+
+.messages-container .message-content {
+    margin-top: 10px;
+}
+
+.messages-container .push-right{
+    text-align: end;
+}
