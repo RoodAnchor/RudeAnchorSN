@@ -53,6 +53,8 @@ namespace RudeAnchorSN.DataLayer.Repositories
             _user.FirstName = user.FirstName;
             _user.LastName = user.LastName;
             _user.ProfilePicUrl = user.ProfilePicUrl;
+            _user.City = user.City;
+            _user.About = user.About;
             _user.LastOnline = user.LastOnline;
 
             await _dbContext.SaveChangesAsync();

@@ -17,7 +17,7 @@ namespace RudeAnchorSN.DataLayer.DataBase
 
         private RSNContext(DbContextOptions<RSNContext> options) : base(options) 
         {
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

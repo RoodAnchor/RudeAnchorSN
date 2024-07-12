@@ -49,6 +49,16 @@
             <input type="text" readonly name="Email" value="@Model.Email" required />
         </div>
 
+        <div class="form-line">
+            <div class="form-label">Город</div>
+            <input type="text" name="City" value="@Model.City" required />
+        </div>
+
+        <div class="form-line">
+            <div class="form-label">О себе</div>
+            <input type="text" name="About" value="@Model.About" required />
+        </div>
+
         <input type="hidden" name="ProfilePicUrl" id="profile-pic-hidden" value="@Model.ProfilePicUrl" />
         <input type="hidden" name="Id" value="@Model.Id" />
         <input type="hidden" name="LastOnline" value="@Model.LastOnline" />

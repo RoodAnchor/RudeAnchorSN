@@ -8,6 +8,8 @@
         public string? Email { get; set; }
         public string? Password { get; set; }
         public string? ProfilePicUrl { get; set; }
+        public string? About { get; set; }
+        public string? City { get; set; }
         public DateTime Registered { get; set; }
         public DateTime LastOnline { get; set; }
         public DateTime BirthDate { get; set; }

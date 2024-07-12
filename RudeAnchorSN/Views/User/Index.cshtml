@@ -101,6 +101,18 @@
 
     <div class="content-container round-corner-box">
         <div class="profile-data">
+            <div class="user-city">
+                Город: @Model.City
+            </div>
+
+            <div class="user-email">
+                Email: @Model.Email
+            </div>
+
+            <div class="user-about">
+                О себе: @Model.About
+            </div>
+
             <div class="date-of-birth">
                 День рождения: @Model.BirthDate.ToShortDateString() (@Model.Age лет)
             </div>
