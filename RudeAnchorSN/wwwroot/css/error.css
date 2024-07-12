@@ -1,0 +1,27 @@
+﻿h1, h2 {
+    color: white;
+}
+
+h1{
+    font-size: 50px;
+}
+
+h2 {
+    text-align: end;
+}
+
+main{
+    align-content: space-evenly;
+}
+
+.warning-sign{
+    text-align: center;
+}
+
+.warning-sign-icon::after {
+    font: normal normal normal 14px / 1 FontAwesomeSolid;
+    content: "\f071";
+    font-size: 19rem;
+    color: #ff6262;
+    position: relative;
+}

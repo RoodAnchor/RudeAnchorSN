@@ -47,7 +47,7 @@ namespace RudeAnchorSN.Controllers
                 return RedirectToAction("Index", new { chat.Id });
             }
 
-            var lastMessage = chat.Messages.LastOrDefault();
+            var lastMessage = chat?.Messages?.LastOrDefault();
 
             if (lastMessage != null && lastMessage?.Author?.Email != User?.Identity?.Name)
                 await _chatService.MarkAsRead(chat.Id);

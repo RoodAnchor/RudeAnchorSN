@@ -7,7 +7,9 @@ namespace RudeAnchorSN.Attributes
     {
         public void OnException(ExceptionContext context)
         {
-            throw new NotImplementedException();
+            string message = "Произошла ошибка";
+
+            context.Result = new BadRequestObjectResult(message);
         }
     }
 }

@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using RudeAnchorSN.LogicLayer.Services;
 using RudeAnchorSN.LogicLayer.Utils;
+using RudeAnchorSN.LogicLayer.Services.Logging.Extensions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using RudeAnchorSN.Utils;
+using RudeAnchorSN.Middleware;
 
 namespace RudeAnchorSN
 {
@@ -35,15 +38,21 @@ namespace RudeAnchorSN
                     options.LoginPath = new PathString("/");
                 });
 
+            builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+            builder.Logging.AddFileLogger();
+
             var app = builder.Build();
 
 
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
 
                 app.UseHsts();
             }
+
+            app.UseMiddleware<LoggingMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

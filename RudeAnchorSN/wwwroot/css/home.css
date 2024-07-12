@@ -2,10 +2,13 @@
     color: white;
 }
 
-.wrapper{
-    align-items: center;
+main {
     display: flex;
-    height: 100%;
+    align-items: center;
+}
+
+.wrapper{
+    display: flex;
 }
 
 .home-forms {
