@@ -33,9 +33,13 @@
 
             @{
                 var lastMessage = chat.Messages.OrderBy(x => x.Created).LastOrDefault();
+                var chatUser = chat.Users.FirstOrDefault(x => x.Email != User.Identity.Name);
             }
 
             <a asp-action="Index" asp-controller="Chat" asp-route-id="@chat.Id">
+                <div class="chat-user">
+                    <h3>Чат с @chatUser.FirstName @chatUser.LastName</h3>
+                </div>
                 <div class="last-author">
                     @if (lastMessage?.Author?.Email == User?.Identity?.Name)
                     {

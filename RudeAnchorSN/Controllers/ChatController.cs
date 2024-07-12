@@ -32,6 +32,8 @@ namespace RudeAnchorSN.Controllers
             
             if (chat is null)
             {
+                chat = new ChatModel();
+
                 var currentUser = await _userService.GetUser(User?.Identity?.Name);
                 var user = await _userService.GetUser(userId);
                 var users = new List<UserModel>();
@@ -42,9 +44,7 @@ namespace RudeAnchorSN.Controllers
                 if (user != null)
                     users.Add(user);
 
-                chat = await _chatService.StartChat(users);
-
-                return RedirectToAction("Index", new { chat.Id });
+                chat.Users = users;
             }
 
             var lastMessage = chat?.Messages?.LastOrDefault();
@@ -59,15 +59,19 @@ namespace RudeAnchorSN.Controllers
         [Route("SendMessage")]
         public async Task<IActionResult> SendMessage(
             int chatId,
+            int targetUserId,
             string content)
         {
             var user = await _userService.GetUser(User?.Identity?.Name);
+            var targetUser = await _userService.GetUser(targetUserId);
+            var chat = await _chatService.GetChat(chatId);
 
-            if (user is null) return RedirectToAction("Index", new { id = chatId });
+            if (chat is null)
+                chat = await _chatService.StartChat(new List<UserModel>() { user, targetUser });
 
             var message = new MessageModel()
             {
-                ChatId = chatId,
+                ChatId = chat.Id,
                 AuthorId = user.Id,
                 Created = DateTime.Now,
                 Content = content
@@ -75,7 +79,7 @@ namespace RudeAnchorSN.Controllers
 
             await _chatService.SendMessage(message);
 
-            return RedirectToAction("Index", new { id = chatId });
+            return RedirectToAction("Index", new { id = chat.Id });
         }
 
         [HttpGet]

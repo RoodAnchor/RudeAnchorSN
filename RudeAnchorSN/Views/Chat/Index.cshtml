@@ -64,7 +64,8 @@
             <input type="text" name="content" required />
         </div>
 
-        <input type="hidden" name="chatId" value="@Model.Id">
+        <input type="hidden" name="chatId" value="@Model.Id" />
+        <input type="hidden" name="targetUserId" value="@Model.Users.FirstOrDefault(x => x.Email != User.Identity.Name).Id" />
 
         <div class="form-line">
             <button type="submit">Отправить</button>
